@@ -1,0 +1,132 @@
+{
+  "project": {
+    "id": "your-sanity-project-id",
+    "name": "Your Project Name",
+    "dataset": "production",
+    "baseUrl": "https://your-website.com"
+  },
+  "api": {
+    "version": "2024-12-02",
+    "useCdn": false,
+    "token": "your-sanity-api-token-here",
+    "perspective": "published"
+  },
+  "credentials": {
+    "instructions": [
+      "1. Go to https://manage.sanity.io/",
+      "2. Select your project",
+      "3. Go to Settings > API",
+      "4. Create new token with write permissions",
+      "5. Copy token to 'api.token' field",
+      "6. Save this file as 'sanity-config.json'"
+    ]
+  },
+  "content": {
+    "postType": "post",
+    "author": {
+      "name": "Thuong-Tuan Tran",
+      "notes": "If author doesn't exist, create in Sanity Studio first"
+    },
+    "categories": {
+      "tech": "Technology",
+      "personal-dev": "Personal Development"
+    },
+    "requiredFields": [
+      "title",
+      "slug",
+      "content",
+      "excerpt",
+      "author",
+      "categories",
+      "publishedAt"
+    ],
+    "optionalFields": [
+      "seoTitle",
+      "seoDescription",
+      "seoKeywords",
+      "tags",
+      "coverImage",
+      "readingTime",
+      "wordCount"
+    ]
+  },
+  "publishing": {
+    "modes": {
+      "markdown": {
+        "description": "Output formatted markdown for manual copy-paste",
+        "requires": []
+      },
+      "api": {
+        "description": "Direct publish to Sanity via API",
+        "requires": ["api.token", "project.id", "dataset"]
+      },
+      "ask-user": {
+        "description": "Ask user which mode at runtime",
+        "requires": []
+      }
+    },
+    "defaultMode": "ask-user",
+    "fallbackMode": "markdown"
+  },
+  "validation": {
+    "title": {
+      "minLength": 5,
+      "maxLength": 100
+    },
+    "excerpt": {
+      "maxLength": 200
+    },
+    "content": {
+      "minWordCount": 500
+    },
+    "categories": {
+      "minCount": 1,
+      "maxCount": 5
+    },
+    "tags": {
+      "maxCount": 10
+    }
+  },
+  "security": {
+    "tokenStorage": "environment-variable-or-file",
+    "recommended": "Use SANITY_API_TOKEN environment variable",
+    "neverCommit": ["api.token", "project.id in private repos"]
+  },
+  "schema": {
+    "reference": {
+      "authorType": "author",
+      "categoryType": "category",
+      "postType": "post"
+    },
+    "fields": {
+      "title": "string",
+      "slug": "slug",
+      "content": "array",
+      "excerpt": "text",
+      "publishedAt": "datetime",
+      "author": "reference",
+      "categories": "array",
+      "tags": "array"
+    }
+  },
+  "troubleshooting": {
+    "commonIssues": [
+      {
+        "issue": "Invalid API token",
+        "solution": "Check token has write permissions and hasn't expired"
+      },
+      {
+        "issue": "Author reference not found",
+        "solution": "Create author in Sanity Studio first"
+      },
+      {
+        "issue": "Category doesn't exist",
+        "solution": "Create category in Sanity or use existing one"
+      },
+      {
+        "issue": "Slug already exists",
+        "solution": "Generate unique slug (add timestamp)"
+      }
+    ]
+  }
+}
