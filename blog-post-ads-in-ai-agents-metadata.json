@@ -1,0 +1,60 @@
+{
+  "id": "340038cb-36dc-4aa0-a374-2ae9df9355ed",
+  "title": "Ad-Supported AI Agents: OpenAI, Amp Free & Giga Dev Rise",
+  "slug": "ads-in-ai-agents",
+  "publishedAt": "2025-12-06T16:44:00.000+00:00",
+  "wordCount": "~2,500 words",
+  "readTime": "~10 minutes",
+  "excerpt": "Discover how ad-supported AI is reshaping the industry. Analysis of OpenAI's leaked ChatGPT ads, Amp Free's coding model, and Giga Dev's viral strategy.",
+  "keywords": [
+    "ad-supported AI",
+    "ChatGPT ads",
+    "Amp Free",
+    "Giga Dev",
+    "AI monetization",
+    "OpenAI financial pressure",
+    "Claude Code free",
+    "AI agents",
+    "OpenAI vs Anthropic"
+  ],
+  "categories": ["Technology"],
+  "author": {
+    "ref": "e22e28ca-0e7c-4b9f-bc4f-ec9dbf070e4a",
+    "name": "Thuong-Tuan Tran"
+  },
+  "seo": {
+    "metaTitle": "Ad-Supported AI Agents: OpenAI, Amp Free & Giga Dev Rise",
+    "metaDescription": "OpenAI, Amp Free & Giga Dev lead the ad-supported AI pivot. Explore the new monetization landscape.",
+    "ogTitle": "Ad-Supported AI: ChatGPT, Amp Free & Giga Dev",
+    "ogDescription": "OpenAI, Amp Free & Giga Dev lead the ad-supported AI pivot. Explore the new monetization landscape.",
+    "ogType": "article"
+  },
+  "images": [
+    {
+      "url": "https://cdn.sanity.io/images/w486ji4p/production/image-f161ba02de38ba304993a34196f13020cc932cae-726x697-png",
+      "caption": "Ads in Paid Plan"
+    },
+    {
+      "url": "https://cdn.sanity.io/images/w486ji4p/production/image-edac17e5e92adec46013a484ec5cb275a8ba1d10-1080x302-png",
+      "caption": "Key metrics on OpenAI & Anthropic's revenue"
+    },
+    {
+      "url": "https://cdn.sanity.io/images/w486ji4p/production/image-a5b7277eeede7f42cce0422fd1880883c0c02a26-432x214-png",
+      "caption": "Ads inside Amp Free"
+    },
+    {
+      "url": "https://cdn.sanity.io/images/w486ji4p/production/image-40954dfe597fd4e17d71fa0d3cf043106089d2f3-817x196-png",
+      "caption": "No data training on Amp Free"
+    },
+    {
+      "url": "https://cdn.sanity.io/images/w486ji4p/production/image-8fdaea3a3bedb408711fb8256d1dff6727c6d83e-1118x796-png",
+      "caption": "Giga Ads in Claude Code terminal"
+    },
+    {
+      "url": "https://cdn.sanity.io/images/w486ji4p/production/image-31858281debfaa09f309806253a37e98de14d318-613x517-png",
+      "caption": "I got access to Giga Dev"
+    }
+  ],
+  "sanityDataset": "production",
+  "source": "Fetched from Sanity CMS on December 7, 2025"
+}
