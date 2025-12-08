@@ -1,0 +1,46 @@
+{
+  "projectId": "proj-2025-12-03-113148",
+  "topic": "Ads in AI Agents: ChatGPT Pauses While Amp Free and Giga Dev Launch Ad-Supported Models",
+  "contentType": "tech",
+  "publishingMode": "markdown",
+  "status": "publishing",
+  "createdAt": "2025-12-03T11:31:48.356962",
+  "author": "Thuong-Tuan Tran",
+  "brandVoice": "Professional & Friendly",
+  "phases": {
+    "initialization": {
+      "status": "complete",
+      "output": "state.json"
+    },
+    "research": {
+      "status": "complete",
+      "output": "research-findings.json"
+    },
+    "synthesis": {
+      "status": "complete",
+      "output": "content-outline.md"
+    },
+    "writing": {
+      "status": "complete",
+      "output": "draft-tech.md"
+    },
+    "seo": {
+      "status": "complete",
+      "output": "seo-optimized-draft.md"
+    },
+    "review": {
+      "status": "complete",
+      "output": "polished-draft.md"
+    },
+    "publishing": {
+      "status": "complete",
+      "output": "sanity-ready-post.md"
+    }
+  },
+  "metadata": {
+    "wordCount": 0,
+    "seoScore": 0,
+    "styleScore": 0,
+    "errors": []
+  }
+}

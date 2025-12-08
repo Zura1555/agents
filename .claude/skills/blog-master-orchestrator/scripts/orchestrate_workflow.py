@@ -68,21 +68,21 @@ def initialize_state(project_id: str, topic: str, content_type: str, publishing_
     with open(state_file, 'w') as f:
         json.dump(state, f, indent=2)
 
-    print(f"✓ Initialized project {project_id}")
+    print(f"[OK] Initialized project {project_id}")
     return state
 
 def validate_input(topic: str, content_type: str, publishing_mode: str) -> bool:
     """Validate user input."""
     if not topic or len(topic.strip()) < 3:
-        print("✗ Error: Topic must be at least 3 characters")
+        print("[ERROR] Topic must be at least 3 characters")
         return False
 
     if content_type not in ["tech", "personal-dev"]:
-        print("✗ Error: Content type must be 'tech' or 'personal-dev'")
+        print("[ERROR] Content type must be 'tech' or 'personal-dev'")
         return False
 
     if publishing_mode not in ["markdown", "api", "ask-user"]:
-        print("✗ Error: Publishing mode must be 'markdown', 'api', or 'ask-user'")
+        print("[ERROR] Publishing mode must be 'markdown', 'api', or 'ask-user'")
         return False
 
     return True
@@ -129,7 +129,7 @@ def run_phase(state: Dict[str, Any], phase: str, agent_name: str, input_data: Di
             if expected_output:
                 output_path = workspace / expected_output
                 if output_path.exists() and output_path.stat().st_size > 0:
-                    print(f"✓ Output file already exists, skipping phase")
+                    print(f"[OK] Output file already exists, skipping phase")
                     update_phase_status(state, phase, "complete")
                     return True
 
@@ -146,12 +146,12 @@ def run_phase(state: Dict[str, Any], phase: str, agent_name: str, input_data: Di
             # 4. Validating the output
 
             update_phase_status(state, phase, "complete")
-            print(f"✓ Phase {phase} completed successfully")
+            print(f"[OK] Phase {phase} completed successfully")
             return True
 
         except Exception as e:
             error_msg = str(e)
-            print(f"✗ Error in phase {phase} (attempt {attempt}): {error_msg}")
+            print(f"[ERROR] Error in phase {phase} (attempt {attempt}): {error_msg}")
             log_error(state, phase, error_msg)
 
             if attempt < max_retries:
@@ -159,7 +159,7 @@ def run_phase(state: Dict[str, Any], phase: str, agent_name: str, input_data: Di
                 import time
                 time.sleep(5)
             else:
-                print(f"✗ Phase {phase} failed after {max_retries} attempts")
+                print(f"[ERROR] Phase {phase} failed after {max_retries} attempts")
                 update_phase_status(state, phase, "error")
                 return False
 
@@ -204,7 +204,7 @@ def execute_workflow(topic: str, content_type: str, publishing_mode: str) -> boo
     for phase_name, agent_name, phase_input in phases:
         success = run_phase(state, phase_name, agent_name, phase_input)
         if not success:
-            print(f"\n✗ Workflow failed at phase: {phase_name}")
+            print(f"\n[ERROR] Workflow failed at phase: {phase_name}")
             print(f"Check {workspace}/state.json for details")
             return False
 

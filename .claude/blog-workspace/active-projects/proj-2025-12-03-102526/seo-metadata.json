@@ -1,0 +1,53 @@
+{
+  "title": "Interleaved Thinking in AI Agents: How MiniMax M2 and DeepSeek R1 Revolutionize Agent Architecture",
+  "description": "Discover how interleaved thinking in AI agents works, with deep insights into MiniMax M2 and DeepSeek R1's innovative reasoning patterns and architectural approaches.",
+  "keywords": [
+    "interleaved thinking AI agents",
+    "MiniMax M2",
+    "DeepSeek R1",
+    "AI agent architecture",
+    "AI reasoning patterns",
+    "cognitive AI systems",
+    "agent workflows",
+    "AI cognition",
+    "machine learning agents",
+    "reasoning modes"
+  ],
+  "primaryKeyword": "interleaved thinking AI agents",
+  "secondaryKeywords": [
+    "MiniMax M2",
+    "DeepSeek R1",
+    "AI agent architecture"
+  ],
+  "estimatedWordCount": 1450,
+  "readingTime": "6-7 minutes",
+  "targetAudience": "AI developers, ML engineers, technical architects",
+  "contentType": "Technical Blog Post",
+  "publishDate": "2025-12-03",
+  "author": "Thuong-Tuan Tran",
+  "category": "Artificial Intelligence",
+  "tags": [
+    "AI Agents",
+    "Machine Learning",
+    "AI Architecture",
+    "Reasoning Systems",
+    "Cognitive AI",
+    "MiniMax",
+    "DeepSeek",
+    "Agent Workflows"
+  ],
+  "seoScore": 85,
+  "keywordDensity": {
+    "interleaved thinking": 2.8,
+    "AI agents": 4.2,
+    "MiniMax M2": 1.5,
+    "DeepSeek R1": 1.4,
+    "reasoning patterns": 2.1
+  },
+  "optimizationRecommendations": [
+    "Add internal links to related AI agent content",
+    "Include diagrams showing interleaved thinking architecture",
+    "Consider creating a companion tutorial on implementation",
+    "Add FAQ section addressing common questions about interleaved thinking"
+  ]
+}

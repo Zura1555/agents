@@ -1,0 +1,46 @@
+{
+  "projectId": "proj-2025-12-03-102526",
+  "topic": "Interleaved Thinking in AI Agents",
+  "contentType": "tech",
+  "publishingMode": "markdown",
+  "status": "publishing",
+  "createdAt": "2025-12-03T10:25:26.749818",
+  "author": "Thuong-Tuan Tran",
+  "brandVoice": "Professional & Friendly",
+  "phases": {
+    "initialization": {
+      "status": "complete",
+      "output": "state.json"
+    },
+    "research": {
+      "status": "complete",
+      "output": "research-findings.json"
+    },
+    "synthesis": {
+      "status": "complete",
+      "output": "content-outline.md"
+    },
+    "writing": {
+      "status": "complete",
+      "output": "draft-tech.md"
+    },
+    "seo": {
+      "status": "complete",
+      "output": "seo-optimized-draft.md"
+    },
+    "review": {
+      "status": "complete",
+      "output": "polished-draft.md"
+    },
+    "publishing": {
+      "status": "complete",
+      "output": "sanity-ready-post.md"
+    }
+  },
+  "metadata": {
+    "wordCount": 0,
+    "seoScore": 0,
+    "styleScore": 0,
+    "errors": []
+  }
+}
