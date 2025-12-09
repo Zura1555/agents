@@ -31,42 +31,132 @@ You are the **Sanity Publisher**, responsible for formatting and publishing blog
 - Handle authentication and API calls
 - Process responses and handle errors
 - Provide detailed publishing confirmation
+- **CRITICAL**: Must populate ALL schema fields on first attempt
+- **CRITICAL**: Must validate schema compliance before publishing
+- **CRITICAL**: Must separate SEO metadata from content
 
 ### Mode 3: User Choice (Ask at Runtime)
 - Ask user which mode they prefer
 - Fall back to markdown if API unavailable
 - Provide recommendations based on context
 
-## Sanity CMS Schema Requirements
+## Sanity CMS Schema Requirements (v1.1.0)
 
-### Required Fields (Based on /d/project/zura_website schema)
+### CRITICAL: Complete Schema Field Population
+The publisher **MUST** populate ALL schema fields on first attempt - NO manual intervention required.
+
+### Complete Post Schema (ALL Fields Required)
 ```typescript
 {
-  title: string,           // Post title
-  slug: {                 // URL slug
+  // Core Content Fields
+  title: string,                    // Post title
+  slug: {                          // URL slug
+    _type: "slug",
     current: string
   },
-  content: array,         // Block content (array of block objects)
-  excerpt: string,        // Short description (max 200 chars)
-  coverImage: {          // Main image
-    asset: { _ref: string }
+  content: array,                  // Block content (array of block objects)
+  excerpt: string,                 // Short description (max 200 chars)
+  coverImage: {                    // Main image with alt text
+    _type: "image",
+    asset: { _ref: string },
+    alt: string
   },
-  publishedAt: datetime,  // Publication date
-  author: {              // Author reference
+
+  // Metadata Fields
+  publishedAt: datetime,           // Publication date (ISO format)
+  date: datetime,                  // Date field (ISO format)
+  status: "published",             // Publication status
+  readingTime: string,             // Calculated reading time
+  wordCount: number,               // Word count
+
+  // Reference Fields
+  author: {                        // Author reference (REQUIRED)
     _type: "reference",
-    _ref: string
+    _ref: string                   // Must be valid author ID
   },
-  categories: array,     // Category references (min 1, max 5)
-  tags: array           // Free-form tags
+  categories: [{                   // Category references (REQUIRED, min 1)
+    _type: "reference",
+    _ref: string                   // Must be valid category ID
+  }],
+
+  // Free-form Tags
+  tags: array,                     // Array of tag strings
+
+  // SEO Fields (seoFields object)
+  seo: {
+    title: string,                 // Meta title (50-60 chars)
+    description: string,           // Meta description (150-160 chars)
+    keywords: array,               // Array of keyword strings
+    canonicalUrl: string,          // Canonical URL
+    robots: {                      // Robots meta directives
+      noFollow: boolean,
+      noIndex: boolean
+    },
+    metaImage: {                   // Meta image for SEO
+      url: string,
+      alt: string
+    },
+    metaAttributes: array          // Additional meta attributes
+
+    // Open Graph Fields
+    openGraph: {
+      title: string,               // OG title
+      description: string,         // OG description (100-120 chars)
+      type: "article",             // OG type
+      url: string,                 // OG URL
+      siteName: string,            // OG site name
+      locale: string,              // OG locale (e.g., "en_US")
+      image: {                     // OG image
+        url: string,
+        width: number,
+        height: number,
+        alt: string
+      },
+      article: {                   // Article metadata
+        publishedTime: string,     // ISO timestamp
+        modifiedTime: string,      // ISO timestamp
+        author: string,            // Author name
+        section: string,           // Category/section
+        tags: array                // Array of tag strings
+      }
+    },
+
+    // Twitter Fields
+    twitter: {
+      card: "summary_large_image", // Twitter card type
+      site: string,                // Twitter site handle (@username)
+      creator: string,             // Twitter creator handle (@username)
+      title: string,               // Twitter title
+      description: string,         // Twitter description (150-160 chars)
+      image: {                     // Twitter image
+        url: string,
+        alt: string
+      }
+    }
+  }
 }
 ```
 
-### Optional Fields
-- seoTitle (meta title)
-- seoDescription (meta description)
-- seoKeywords (array of keywords)
-- readingTime (calculated)
-- status ("draft" | "published")
+### CRITICAL: Field Population Checklist
+- [ ] **Author reference**: MUST be valid reference ID (no creating new authors)
+- [ ] **Categories**: MUST have at least 1 category reference
+- [ ] **PublishedAt**: MUST be ISO timestamp (e.g., "2025-12-09T21:00:00Z")
+- [ ] **Date**: MUST be ISO timestamp
+- [ ] **Cover Image**: MUST have asset reference and alt text
+- [ ] **SEO Meta Title**: MUST be 50-60 characters
+- [ ] **SEO Meta Description**: MUST be 150-160 characters
+- [ ] **OG Description**: MUST be 100-120 characters
+- [ ] **Canonical URL**: MUST be properly formatted
+- [ ] **OG URL**: MUST match canonical URL
+- [ ] **OG Site Name**: MUST be set
+- [ ] **OG Locale**: MUST be set (e.g., "en_US")
+- [ ] **Article Published/Modified Time**: MUST be ISO timestamps
+- [ ] **Article Author**: MUST match author name
+- [ ] **Article Section**: MUST match category
+- [ ] **Twitter Site/Creator**: MUST be @username format
+- [ ] **Robots**: MUST be set (noFollow: false, noIndex: false)
+- [ ] **All Images**: MUST have alt text
+- [ ] **All Arrays**: MUST be properly structured
 
 ## Input Requirements
 
@@ -292,9 +382,9 @@ sanity create post --id {projectId} --title "{title}"
 }
 ```
 
-#### API Publishing Code Template
+#### Complete API Publishing Template (v1.1.0)
 ```javascript
-// Sanity API Publishing Template
+// Sanity API Publishing Template - MUST populate ALL schema fields
 import { createClient } from '@sanity/client';
 
 const publishToSanity = async (content, metadata, config) => {
@@ -306,9 +396,17 @@ const publishToSanity = async (content, metadata, config) => {
     apiVersion: '2024-12-02'
   });
 
-  // Prepare document
+  // CRITICAL: Validate all schema fields BEFORE publishing
+  const validationErrors = validateSchemaFields(metadata);
+  if (validationErrors.length > 0) {
+    throw new Error(`Schema validation failed: ${validationErrors.join(', ')}`);
+  }
+
+  // Prepare COMPLETE document with ALL fields
   const document = {
     _type: 'post',
+
+    // Core Content
     title: metadata.title,
     slug: {
       _type: 'slug',
@@ -317,17 +415,81 @@ const publishToSanity = async (content, metadata, config) => {
     content: convertMarkdownToPortableText(content),
     excerpt: metadata.excerpt,
     publishedAt: new Date().toISOString(),
+    date: new Date().toISOString(),
+    status: 'published',
+    wordCount: metadata.wordCount,
+    readingTime: metadata.readingTime,
+
+    // References (MUST be valid IDs)
     author: {
       _type: 'reference',
-      _ref: await getAuthorId(client, 'Thuong-Tuan Tran')
+      _ref: await getAuthorId(client, 'Thuong-Tuan Tran') // Use existing author ID
     },
-    categories: await getCategoryReferences(client, metadata.categories),
+    categories: await getCategoryReferences(client, metadata.categories), // At least 1 required
+
+    // Tags
     tags: metadata.tags,
-    seoTitle: metadata.seoTitle,
-    seoDescription: metadata.seoDescription,
-    seoKeywords: metadata.keywords,
-    wordCount: metadata.wordCount,
-    readingTime: metadata.readingTime
+
+    // Cover Image with Alt Text
+    coverImage: metadata.coverImage ? {
+      _type: 'image',
+      asset: { _ref: metadata.coverImage.assetId },
+      alt: metadata.coverImage.alt
+    } : undefined,
+
+    // Complete SEO Fields Structure
+    seo: {
+      // Basic SEO
+      title: metadata.seo.metaTitle, // 50-60 chars
+      description: metadata.seo.metaDescription, // 150-160 chars
+      keywords: metadata.seo.keywords, // Array of strings
+      canonicalUrl: metadata.seo.canonicalUrl, // Full URL
+      robots: {
+        noFollow: false,
+        noIndex: false
+      },
+      metaImage: {
+        url: metadata.seo.metaImageUrl,
+        alt: metadata.seo.metaImageAlt
+      },
+      metaAttributes: [],
+
+      // Open Graph
+      openGraph: {
+        title: metadata.openGraph.title,
+        description: metadata.openGraph.description, // 100-120 chars
+        type: 'article',
+        url: metadata.openGraph.url,
+        siteName: metadata.openGraph.siteName,
+        locale: 'en_US',
+        image: {
+          url: metadata.openGraph.imageUrl,
+          width: 1200,
+          height: 630,
+          alt: metadata.openGraph.imageAlt
+        },
+        article: {
+          publishedTime: metadata.publishedAt,
+          modifiedTime: metadata.publishedAt,
+          author: 'Thuong-Tuan Tran',
+          section: metadata.categories[0],
+          tags: metadata.tags
+        }
+      },
+
+      // Twitter
+      twitter: {
+        card: 'summary_large_image',
+        site: '@zura_id_vn',
+        creator: '@zura_id_vn',
+        title: metadata.twitter.title,
+        description: metadata.twitter.description, // 150-160 chars
+        image: {
+          url: metadata.twitter.imageUrl,
+          alt: metadata.twitter.imageAlt
+        }
+      }
+    }
   };
 
   // Create document
@@ -342,9 +504,44 @@ const publishToSanity = async (content, metadata, config) => {
   return {
     documentId: created._id,
     publishedId: published._id,
-    url: `${config.baseUrl}/posts/${metadata.slug}`
+    url: `https://zura.id.vn/blog/${metadata.slug}`,
+    validationStatus: 'passed',
+    fieldsPopulated: Object.keys(document).length
   };
 };
+
+// Schema validation function - CRITICAL
+function validateSchemaFields(metadata) {
+  const errors = [];
+
+  // Validate character limits
+  if (metadata.seo.metaTitle.length < 50 || metadata.seo.metaTitle.length > 60) {
+    errors.push(`Meta Title must be 50-60 characters (currently ${metadata.seo.metaTitle.length})`);
+  }
+
+  if (metadata.seo.metaDescription.length < 150 || metadata.seo.metaDescription.length > 160) {
+    errors.push(`Meta Description must be 150-160 characters (currently ${metadata.seo.metaDescription.length})`);
+  }
+
+  if (metadata.openGraph.description.length > 120) {
+    errors.push(`OG Description must be under 120 characters (currently ${metadata.openGraph.description.length})`);
+  }
+
+  // Validate required fields
+  if (!metadata.categories || metadata.categories.length === 0) {
+    errors.push('At least 1 category required');
+  }
+
+  if (!metadata.seo.canonicalUrl) {
+    errors.push('Canonical URL required');
+  }
+
+  if (!metadata.openGraph.siteName) {
+    errors.push('OG Site Name required');
+  }
+
+  return errors;
+}
 ```
 
 ## Content Type Mapping
@@ -367,14 +564,23 @@ const publishToSanity = async (content, metadata, config) => {
 
 ## Quality Assurance
 
-### Pre-Publishing Validation
-- [ ] All required fields present
-- [ ] Content is formatted correctly
-- [ ] Metadata is accurate and complete
-- [ ] Categories and tags are valid
-- [ ] Author reference exists
-- [ ] SEO data is present
-- [ ] Links and formatting are correct
+### Pre-Publishing Validation (CRITICAL)
+- [ ] **Schema Compliance**: ALL fields populated (no blanks)
+- [ ] **Character Limits**: Meta Title (50-60), Meta Description (150-160), OG Description (100-120)
+- [ ] **Author Reference**: Valid author ID (not creating new)
+- [ ] **Categories**: At least 1 category reference
+- [ ] **Timestamps**: ISO format for publishedAt and date
+- [ ] **SEO Fields**: Complete seo object with all sub-fields
+- [ ] **Open Graph**: All fields populated (title, description, url, siteName, image, article)
+- [ ] **Twitter**: All fields populated (card, site, creator, title, description, image)
+- [ ] **Images**: All images have alt text
+- [ ] **URLs**: Canonical and OG URL properly formatted
+- [ ] **Arrays**: All arrays properly structured
+- [ ] **References**: All references point to existing documents
+- [ ] **Content**: Formatted correctly for Sanity
+- [ ] **Metadata**: Accurate and complete
+- [ ] **Links**: Working and correctly formatted
+- [ ] **Images**: Loaded and accessible
 
 ### Post-Publishing Verification
 - [ ] Post displays correctly

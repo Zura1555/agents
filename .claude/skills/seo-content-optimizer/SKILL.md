@@ -91,7 +91,8 @@ The SEO optimizer now outputs COMPLETE metadata matching Sanity CMS schema:
       "metaImage": {
         "suggested": true,
         "description": "{What the meta image should show}",
-        "dimensions": "1200x630px (recommended for social sharing)"
+    "dimensions": "1200x630px (recommended for social sharing)",
+    "url": "https://zura.id.vn/images/{meta-image-filename}.jpg"
       }
     },
     "readability": {
@@ -106,10 +107,10 @@ The SEO optimizer now outputs COMPLETE metadata matching Sanity CMS schema:
     "description": "{OG description - compelling for social media}",
     "type": "article",
     "url": "{canonical URL}",
-    "siteName": "{Site name}",
+    "siteName": "Zura.id.vn",
     "locale": "en_US",
     "image": {
-      "url": "{URL to meta image}",
+      "url": "https://zura.id.vn/images/{meta-image-filename}.jpg",
       "width": 1200,
       "height": 630,
       "alt": "{Alt text for OG image}"
@@ -124,12 +125,12 @@ The SEO optimizer now outputs COMPLETE metadata matching Sanity CMS schema:
   },
   "twitter": {
     "card": "summary_large_image",
-    "site": "@{twitter_handle}",
-    "creator": "@{twitter_handle}",
+    "site": "@zura_id_vn",
+    "creator": "@zura_id_vn",
     "title": "{Twitter-optimized title}",
     "description": "{Twitter-optimized description}",
     "image": {
-      "url": "{URL to Twitter image}",
+      "url": "https://zura.id.vn/images/{twitter-image-filename}.jpg",
       "alt": "{Alt text for Twitter image}"
     }
   },
@@ -138,7 +139,7 @@ The SEO optimizer now outputs COMPLETE metadata matching Sanity CMS schema:
     "noIndex": false,
     "instructions": "index, follow (default for blog posts)"
   },
-  "canonicalUrl": "{https://example.com/post-slug}",
+  "canonicalUrl": "https://zura.id.vn/blog/{post-slug}",
   "recommendations": [
     {
       "category": "keyword-optimization|content|technical|links|images|social",
@@ -190,6 +191,75 @@ The SEO optimizer now outputs COMPLETE metadata matching Sanity CMS schema:
 - **File Format**: JPG or PNG
 - **File Size**: Under 1MB for fast loading
 
+## Complete Sanity Schema Field Population (v1.2.0)
+
+The SEO optimizer **MUST** populate ALL Sanity schema fields for first-attempt success:
+
+### Required SEO Fields Structure
+```json
+{
+  "seo": {
+    "title": "Meta Title (50-60 chars)",
+    "description": "Meta Description (150-160 chars)",
+    "keywords": ["kw1", "kw2", "kw3"],
+    "canonicalUrl": "https://site.com/post-slug",
+    "robots": { "noFollow": false, "noIndex": false },
+    "metaImage": { "url": "image-url", "alt": "alt text" },
+    "metaAttributes": []
+  },
+  "openGraph": {
+    "title": "OG Title (60-90 chars)",
+    "description": "OG Description (100-120 chars)",
+    "type": "article",
+    "url": "https://site.com/post-slug",
+    "siteName": "Site Name",
+    "locale": "en_US",
+    "image": {
+      "url": "image-url",
+      "width": 1200,
+      "height": 630,
+      "alt": "alt text"
+    },
+    "article": {
+      "publishedTime": "ISO timestamp",
+      "modifiedTime": "ISO timestamp",
+      "author": "Author Name",
+      "section": "Category",
+      "tags": ["tag1", "tag2"]
+    }
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "site": "@twitterhandle",
+    "creator": "@twitterhandle",
+    "title": "Twitter Title (under 70 chars)",
+    "description": "Twitter Description (150-160 chars)",
+    "image": { "url": "image-url", "alt": "alt text" }
+  }
+}
+```
+
+### Missing Field Detection
+The optimizer must detect and populate these commonly-missing fields:
+- ✅ Canonical URL generation from slug
+- ✅ OG URL (same as canonical)
+- ✅ OG Site Name
+- ✅ OG Locale
+- ✅ Article metadata (publishedTime, modifiedTime, author, section, tags)
+- ✅ Twitter site and creator handles
+- ✅ Robots directives
+- ✅ Meta image with alt text
+- ✅ Meta attributes array
+
+### Validation Checklist
+- [ ] All schema fields populated (no blanks)
+- [ ] References are properly formatted
+- [ ] Character limits enforced
+- [ ] Image fields include alt text
+- [ ] Timestamps in ISO format
+- [ ] URLs properly formatted
+- [ ] Arrays properly structured
+
 ## Enhanced Scoring Categories (100 points total)
 
 #### Keyword Optimization (25 points)
@@ -221,18 +291,90 @@ The SEO optimizer now outputs COMPLETE metadata matching Sanity CMS schema:
 - Content depth and quality: 10 pts
 - Unique insights or perspectives: 5 pts
 
+## MANDATORY Character Limit Validation (v1.2.0)
+
+### Critical SEO Character Limits
+The SEO optimizer **MUST** validate and enforce these character limits before output:
+
+#### Meta Title
+- **Range**: 50-60 characters
+- **Minimum**: 50 characters
+- **Maximum**: 60 characters
+- **Validation**: Count all characters including spaces and punctuation
+- **Auto-adjust**: If under 50 or over 60, automatically adjust while preserving keywords
+
+#### Meta Description
+- **Range**: 150-160 characters
+- **Minimum**: 150 characters
+- **Maximum**: 160 characters
+- **Validation**: Must count actual characters (not bytes)
+- **Auto-adjust**: Trim or expand to fit 150-160 range
+- **Priority**: Keep primary keyword and compelling CTA
+
+#### Open Graph Description
+- **Range**: 100-120 characters
+- **Maximum**: 120 characters
+- **Validation**: Critical for social media display
+- **Auto-adjust**: Must be under 120 chars
+- **Note**: Different from meta description - optimize for social engagement
+
+#### Twitter Description
+- **Range**: 150-160 characters
+- **Maximum**: 160 characters
+- **Validation**: Match meta description or optimize separately
+
+### Character Counting Implementation
+```javascript
+function countCharacters(text) {
+  // Count ALL characters including spaces and punctuation
+  return text.length;
+}
+
+function validateMetaTitle(title) {
+  const length = countCharacters(title);
+  if (length < 50 || length > 60) {
+    // Auto-adjust while preserving keywords
+    return adjustToRange(title, 50, 60);
+  }
+  return title;
+}
+
+function validateMetaDescription(description) {
+  const length = countCharacters(description);
+  if (length < 150 || length > 160) {
+    return adjustToRange(description, 150, 160);
+  }
+  return description;
+}
+
+function validateOGDescription(description) {
+  const length = countCharacters(description);
+  if (length > 120) {
+    return trimToLimit(description, 120);
+  }
+  return description;
+}
+```
+
+### Auto-Adjustment Strategy
+1. **First Priority**: Keep primary keyword
+2. **Second Priority**: Maintain readability
+3. **Third Priority**: Preserve compelling language
+4. **Trim Strategy**: Remove filler words, redundant phrases
+5. **Expand Strategy**: Add relevant descriptors, benefits
+
 ## Best Practices for Social Media Tags
 
 ### Open Graph Best Practices
 1. **Title**: 60-90 characters (can be more engaging than SEO title)
-2. **Description**: 150-200 characters ( compelling, drives clicks)
+2. **Description**: 100-120 characters (CRITICAL: Must be under 120)
 3. **Image**: High-quality, branded, 1200x630px
 4. **Type**: Always "article" for blog posts
 5. **URL**: Use canonical URL
 
 ### Twitter Card Best Practices
 1. **Title**: Keep under 70 characters
-2. **Description**: 150-160 characters
+2. **Description**: 150-160 characters (must be under 160)
 3. **Image**: 1200x675px minimum
 4. **Card Type**: "summary_large_image" for blog posts
 
@@ -268,6 +410,14 @@ The SEO optimizer now outputs COMPLETE metadata matching Sanity CMS schema:
 - [ ] Meta image suggested with dimensions
 - [ ] Canonical URL included
 - [ ] Robots meta tags set (index, follow)
+
+### Character Limit Validation (CRITICAL)
+- [ ] Meta Title: 50-60 characters (validated and logged)
+- [ ] Meta Description: 150-160 characters (validated and logged)
+- [ ] OG Description: 100-120 characters (validated and logged)
+- [ ] Twitter Description: 150-160 characters (validated and logged)
+- [ ] Auto-adjustment applied if outside ranges
+- [ ] All adjustments logged in seo-metadata.json
 
 ### Content Quality
 - [ ] Readability maintained
