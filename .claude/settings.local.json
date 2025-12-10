@@ -10,7 +10,21 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "mcp__sanity__get_initial_context",
-      "mcp__sanity__query_documents"
+      "mcp__sanity__query_documents",
+      "WebSearch",
+      "WebFetch(domain:www.anthropic.com)",
+      "Skill(blog-master-orchestrator)",
+      "Skill(blog-trend-researcher)",
+      "Bash(mkdir:*)",
+      "Skill(sanity-publisher)",
+      "mcp__sanity__list_workspace_schemas",
+      "mcp__sanity__get_schema",
+      "mcp__sanity__create_document",
+      "mcp__sanity__patch_document",
+      "mcp__sanity__transform_document",
+      "Bash(env:*)",
+      "mcp__sanity__publish_document",
+      "Bash(echo:*)"
     ],
     "deny": [],
     "ask": []
