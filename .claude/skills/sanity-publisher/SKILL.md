@@ -10,6 +10,65 @@ tags: [blog, publishing, sanity, cms, automation]
 
 You are the **Sanity Publisher**, responsible for formatting and publishing blog content to Sanity CMS. You support both manual publishing (markdown output) and automated publishing (API integration).
 
+## CRITICAL: Sanity MCP Publishing Workflow (Updated 2025-12-24)
+
+When publishing via Sanity MCP tools, follow this exact sequence:
+
+### Step 1: Query Existing References FIRST
+```
+1. Query authors: *[_type == "person"]{_id, name}
+2. Query categories: *[_type == "category"]{_id, title}
+3. Store the actual _id values for use in document creation
+```
+
+### Step 2: Create Document with ALL Fields
+Use `mcp__sanity__create_document` with complete instruction including:
+- Title, slug, excerpt
+- Author reference ID (from step 1)
+- Category reference IDs (from step 1)
+- Full markdown content
+- All SEO fields with correct character counts
+
+### Step 3: Patch Missing Fields (if needed)
+AI document creation may not set reference fields correctly. Always verify and patch:
+```
+1. Query the created document to verify all fields
+2. Patch any missing fields individually:
+   - date, publishedAt (ISO timestamps)
+   - author (reference object with _ref and _type)
+   - categories (array of reference objects with _key, _ref, _type)
+   - seo.title, seo.description, seo.keywords
+   - seo.openGraph (complete object)
+   - seo.twitter (complete object)
+```
+
+### Step 4: Verify Before Publishing
+Query the draft document and verify ALL fields are populated correctly.
+
+### SEO Character Requirements (MANDATORY)
+| Field | Min | Max | Notes |
+|-------|-----|-----|-------|
+| Meta Title | 50 | 60 | SEO title for search results |
+| Meta Description | 150 | 160 | Description for search results |
+| OG Title | - | 60 | Open Graph title for social sharing |
+| OG Description | 90 | 120 | Social card description |
+| Twitter Description | 150 | 160 | Twitter card description |
+
+### Reference Field Format (CRITICAL)
+```json
+// Author reference
+{
+  "_type": "reference",
+  "_ref": "e22e28ca-0e7c-4b9f-bc4f-ec9dbf070e4a"
+}
+
+// Categories array
+[
+  {"_key": "cat1", "_type": "reference", "_ref": "0973c166-b3cf-412a-a832-c783aba0b780"},
+  {"_key": "cat2", "_type": "reference", "_ref": "43f1a785-9f80-4458-abe5-0ee7795fe6bc"}
+]
+```
+
 ## Core Responsibilities
 
 1. **Content Formatting**: Convert polished draft to Sanity-compatible format
@@ -100,8 +159,8 @@ The publisher **MUST** populate ALL schema fields on first attempt - NO manual i
 
     // Open Graph Fields
     openGraph: {
-      title: string,               // OG title
-      description: string,         // OG description (100-120 chars)
+      title: string,               // OG title (max 60 chars)
+      description: string,         // OG description (90-120 chars)
       type: "article",             // OG type
       url: string,                 // OG URL
       siteName: string,            // OG site name
@@ -145,7 +204,8 @@ The publisher **MUST** populate ALL schema fields on first attempt - NO manual i
 - [ ] **Cover Image**: MUST have asset reference and alt text
 - [ ] **SEO Meta Title**: MUST be 50-60 characters
 - [ ] **SEO Meta Description**: MUST be 150-160 characters
-- [ ] **OG Description**: MUST be 100-120 characters
+- [ ] **OG Title**: MUST be max 60 characters
+- [ ] **OG Description**: MUST be 90-120 characters
 - [ ] **Canonical URL**: MUST be properly formatted
 - [ ] **OG URL**: MUST match canonical URL
 - [ ] **OG Site Name**: MUST be set
@@ -514,7 +574,7 @@ const publishToSanity = async (content, metadata, config) => {
 function validateSchemaFields(metadata) {
   const errors = [];
 
-  // Validate character limits
+  // Validate character limits (UPDATED 2025-12-24)
   if (metadata.seo.metaTitle.length < 50 || metadata.seo.metaTitle.length > 60) {
     errors.push(`Meta Title must be 50-60 characters (currently ${metadata.seo.metaTitle.length})`);
   }
@@ -523,8 +583,14 @@ function validateSchemaFields(metadata) {
     errors.push(`Meta Description must be 150-160 characters (currently ${metadata.seo.metaDescription.length})`);
   }
 
-  if (metadata.openGraph.description.length > 120) {
-    errors.push(`OG Description must be under 120 characters (currently ${metadata.openGraph.description.length})`);
+  // OG Title: max 60 characters
+  if (metadata.openGraph.title.length > 60) {
+    errors.push(`OG Title must be max 60 characters (currently ${metadata.openGraph.title.length})`);
+  }
+
+  // OG Description: 90-120 characters (min 90 for best engagement)
+  if (metadata.openGraph.description.length < 90 || metadata.openGraph.description.length > 120) {
+    errors.push(`OG Description must be 90-120 characters (currently ${metadata.openGraph.description.length})`);
   }
 
   // Validate required fields
@@ -566,7 +632,7 @@ function validateSchemaFields(metadata) {
 
 ### Pre-Publishing Validation (CRITICAL)
 - [ ] **Schema Compliance**: ALL fields populated (no blanks)
-- [ ] **Character Limits**: Meta Title (50-60), Meta Description (150-160), OG Description (100-120)
+- [ ] **Character Limits**: Meta Title (50-60), Meta Description (150-160), OG Title (max 60), OG Description (90-120)
 - [ ] **Author Reference**: Valid author ID (not creating new)
 - [ ] **Categories**: At least 1 category reference
 - [ ] **Timestamps**: ISO format for publishedAt and date
