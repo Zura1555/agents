@@ -1,0 +1,131 @@
+{
+  "projectId": "proj-2025-12-08-001",
+  "seo": {
+    "score": 92,
+    "scoreBreakdown": {
+      "keywordOptimization": 24,
+      "contentStructure": 24,
+      "readability": 23,
+      "technicalSeo": 18,
+      "userValue": 3
+    },
+    "keywords": {
+      "primary": "Docker MCP",
+      "secondary": ["Model Context Protocol", "MCP context consumption", "token reduction", "AI agents"],
+      "longTail": ["Docker MCP token reduction", "Model Context Protocol context consumption", "AI agent token savings", "Docker MCP vs traditional MCP"],
+      "lsi": ["context window", "token optimization", "AI workflow efficiency", "tool discovery", "on-demand loading", "code execution model"]
+    },
+    "titles": {
+      "h1": "Docker MCP: Solving the Model Context Protocol's Context Consumption Crisis",
+      "metaTitle": "Docker MCP: 98.7% Token Reduction for AI Agents | MCP Analysis",
+      "titleLength": 58
+    },
+    "metaDescription": {
+      "content": "Discover how Docker MCP solves the Model Context Protocol's context consumption crisis with 98.7% token reduction. Real-world benchmarks, cost savings analysis, and technical deep dive.",
+      "length": 156,
+      "includesPrimaryKeyword": true,
+      "includesCTA": false
+    },
+    "headers": {
+      "h1Count": 1,
+      "h2Count": 11,
+      "h3Count": 12,
+      "keywordInHeaders": true,
+      "headerStructure": "optimal"
+    },
+    "content": {
+      "wordCount": 1778,
+      "keywordInFirst100Words": true,
+      "keywordInLast100Words": true,
+      "keywordDistribution": "even"
+    },
+    "links": {
+      "internalLinks": 0,
+      "externalLinks": 2,
+      "anchorTextOptimization": "good"
+    },
+    "images": {
+      "total": 0,
+      "withAltText": 0,
+      "altTextOptimized": 0,
+      "metaImage": {
+        "suggested": true,
+        "description": "Bar chart showing 98.7% token reduction from 150,000 to 2,000 tokens with Docker MCP",
+        "dimensions": "1200x630px"
+      }
+    },
+    "readability": {
+      "score": 85,
+      "gradeLevel": "Professional",
+      "avgSentenceLength": "18 words",
+      "paragraphLength": "avg 3.2 sentences"
+    }
+  },
+  "openGraph": {
+    "title": "Docker MCP: Solving the Context Consumption Crisis",
+    "description": "How Docker MCP reduces AI agent token usage by 98.7% while maintaining full functionality. Real-world benchmarks and cost analysis.",
+    "type": "article",
+    "url": "https://your-site.com/blog/docker-mcp-context-consumption",
+    "siteName": "Your Tech Blog",
+    "locale": "en_US",
+    "image": {
+      "url": "https://your-site.com/images/docker-mcp-token-reduction.jpg",
+      "width": 1200,
+      "height": 630,
+      "alt": "Bar chart displaying 98.7% token reduction with Docker MCP"
+    },
+    "article": {
+      "publishedTime": "2025-12-09T00:00:00Z",
+      "modifiedTime": "2025-12-09T00:00:00Z",
+      "author": "Thuong-Tuan Tran",
+      "section": "Technology",
+      "tags": ["Docker", "MCP", "AI", "Token Optimization", "Machine Learning"]
+    }
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "site": "@yourhandle",
+    "creator": "@yourhandle",
+    "title": "Docker MCP: 98.7% Token Reduction for AI Agents",
+    "description": "Analysis of how Docker MCP solves the Model Context Protocol's context consumption crisis with real-world benchmarks and cost savings.",
+    "image": {
+      "url": "https://your-site.com/images/docker-mcp-token-reduction.jpg",
+      "alt": "Bar chart showing dramatic token reduction with Docker MCP"
+    }
+  },
+  "robots": {
+    "noFollow": false,
+    "noIndex": false,
+    "instructions": "index, follow"
+  },
+  "canonicalUrl": "https://your-site.com/blog/docker-mcp-context-consumption",
+  "recommendations": [
+    {
+      "category": "images",
+      "issue": "No images currently in content",
+      "severity": "medium",
+      "recommendation": "Add 8 suggested image placeholders to enhance visual engagement",
+      "example": "Include token consumption dashboard, performance comparison charts, and architecture diagrams"
+    },
+    {
+      "category": "links",
+      "issue": "Limited internal linking",
+      "severity": "low",
+      "recommendation": "Add 2-3 internal links to related MCP or Docker content",
+      "example": "Link to previous posts about AI agent optimization or Docker best practices"
+    }
+  ],
+  "searchIntentMatch": {
+    "intent": "informational",
+    "matchScore": 95,
+    "contentAligns": true
+  },
+  "optimizationHistory": [
+    {
+      "timestamp": "2025-12-09T00:00:00Z",
+      "change": "Removed implementation sections per user feedback, focusing on analysis",
+      "beforeScore": 88,
+      "afterScore": 92
+    }
+  ]
+}

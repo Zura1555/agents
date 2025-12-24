@@ -24,9 +24,50 @@
       "mcp__sanity__transform_document",
       "Bash(env:*)",
       "mcp__sanity__publish_document",
-      "Bash(echo:*)"
+      "Bash(echo:*)",
+      "Bash(git push:*)",
+      "Bash(git push origin main)",
+      "Skill(blog-analytics)",
+      "Skill(blog-repurposer)",
+      "Bash(bun:*)",
+      "WebFetch(domain:docs.docker.com)",
+      "WebFetch(domain:hub.docker.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:claude.com)",
+      "WebFetch(domain:spec.modelcontextprotocol.io)",
+      "WebFetch(domain:platform.openai.com)",
+      "WebFetch(domain:artificialanalysis.ai)",
+      "WebFetch(domain:mcpservers.org)",
+      "WebFetch(domain:invariantlabs.ai)",
+      "WebFetch(domain:docs.n8n.io)",
+      "WebFetch(domain:www.npmjs.com)"
     ],
     "deny": [],
     "ask": []
+  },
+  "hooks": {
+    "SubagentStop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run D:/project/agents/.claude/hooks/BlogAgentStopHook.ts"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run D:/project/agents/.claude/hooks/BlogPhaseTracker.ts"
+          }
+        ]
+      }
+    ]
   }
 }

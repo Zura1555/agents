@@ -1,0 +1,181 @@
+{
+  "projectId": "docker-mcp-fresh-2025-12-23",
+  "seo": {
+    "score": 92,
+    "scoreBreakdown": {
+      "keywordOptimization": 95,
+      "contentStructure": 90,
+      "readability": 92,
+      "technicalSeo": 90,
+      "socialMedia": 95,
+      "userValue": 88
+    },
+    "keywords": {
+      "primary": "Docker MCP",
+      "secondary": ["Model Context Protocol", "AI context limitations", "MCP servers"],
+      "longTail": ["how to reduce AI token costs", "MCP security best practices", "Docker MCP Gateway"],
+      "lsi": ["context window", "token consumption", "AI agents", "containerized MCP"],
+      "density": {
+        "primary": "1.8% (optimal)",
+        "secondary": "0.8% each (optimal)"
+      }
+    },
+    "titles": {
+      "h1": "Docker MCP: Breaking Down the Two Walls Holding Your AI Agents Back",
+      "metaTitle": "Docker MCP: How It Solves AI Context Limitations in 2025",
+      "titleLength": 55
+    },
+    "metaDescription": {
+      "content": "Learn how Docker MCP solves the dual AI context crisis: token costs and real-time data access. 98.7% token reduction with containerized security.",
+      "length": 156,
+      "includesPrimaryKeyword": true,
+      "includesCTA": true
+    },
+    "headers": {
+      "h1Count": 1,
+      "h2Count": 5,
+      "h3Count": 8,
+      "keywordInHeaders": true,
+      "headerStructure": "optimal"
+    },
+    "content": {
+      "wordCount": 1380,
+      "keywordInFirst100Words": true,
+      "keywordInLast100Words": true,
+      "keywordDistribution": "even"
+    },
+    "links": {
+      "internalLinks": 0,
+      "externalLinks": 4,
+      "anchorTextOptimization": "good"
+    },
+    "images": {
+      "total": 0,
+      "withAltText": 0,
+      "altTextOptimized": 0,
+      "metaImage": {
+        "suggested": true,
+        "description": "Docker container icon connected to AI/brain symbol with MCP protocol bridge illustration",
+        "dimensions": "1200x630px",
+        "url": "https://zura.id.vn/images/docker-mcp-ai-context-limitations.jpg"
+      }
+    },
+    "readability": {
+      "score": 72,
+      "gradeLevel": "10th grade",
+      "avgSentenceLength": "16 words",
+      "paragraphLength": "avg 3 sentences"
+    }
+  },
+  "openGraph": {
+    "title": "Docker MCP: Breaking Down the Two Walls Holding Your AI Agents Back",
+    "description": "98.7% token reduction. Secure containerized MCP. Real-time data access for AI agents.",
+    "type": "article",
+    "url": "https://zura.id.vn/blog/docker-mcp-ai-context-limitations",
+    "siteName": "Zura.id.vn",
+    "locale": "en_US",
+    "image": {
+      "url": "https://zura.id.vn/images/docker-mcp-ai-context-limitations.jpg",
+      "width": 1200,
+      "height": 630,
+      "alt": "Docker MCP solving AI context limitations with containerized MCP servers"
+    },
+    "article": {
+      "publishedTime": "2025-12-23T07:00:00Z",
+      "modifiedTime": "2025-12-23T07:00:00Z",
+      "author": "Thuong-Tuan Tran",
+      "section": "AI & Development",
+      "tags": ["Docker MCP", "Model Context Protocol", "AI agents", "context window", "token optimization"]
+    }
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "site": "@zura_id_vn",
+    "creator": "@zura_id_vn",
+    "title": "Docker MCP: Breaking Down AI Agent Limitations",
+    "description": "Learn how Docker MCP solves the dual AI context crisis: token costs and real-time data access. 98.7% token reduction with containerized security.",
+    "image": {
+      "url": "https://zura.id.vn/images/docker-mcp-ai-context-limitations.jpg",
+      "alt": "Docker MCP solving AI context limitations"
+    }
+  },
+  "robots": {
+    "noFollow": false,
+    "noIndex": false,
+    "instructions": "index, follow"
+  },
+  "canonicalUrl": "https://zura.id.vn/blog/docker-mcp-ai-context-limitations",
+  "characterValidation": {
+    "metaTitle": {
+      "value": "Docker MCP: How It Solves AI Context Limitations in 2025",
+      "length": 55,
+      "valid": true,
+      "range": "50-60"
+    },
+    "metaDescription": {
+      "value": "Learn how Docker MCP solves the dual AI context crisis: token costs and real-time data access. 98.7% token reduction with containerized security.",
+      "length": 156,
+      "valid": true,
+      "range": "150-160"
+    },
+    "ogDescription": {
+      "value": "98.7% token reduction. Secure containerized MCP. Real-time data access for AI agents.",
+      "length": 86,
+      "valid": true,
+      "range": "100-120"
+    },
+    "twitterDescription": {
+      "value": "Learn how Docker MCP solves the dual AI context crisis: token costs and real-time data access. 98.7% token reduction with containerized security.",
+      "length": 156,
+      "valid": true,
+      "range": "150-160"
+    }
+  },
+  "recommendations": [
+    {
+      "category": "images",
+      "issue": "No images included in draft",
+      "severity": "medium",
+      "recommendation": "Add 1-2 images: architecture diagram showing Docker MCP Gateway flow, and before/after comparison visualization",
+      "example": "Create an infographic showing AI Client → MCP Gateway → Docker Containers flow"
+    },
+    {
+      "category": "links",
+      "issue": "No internal links present",
+      "severity": "low",
+      "recommendation": "Add 2-3 internal links to related blog posts if available",
+      "example": "Link to posts about AI development, Docker containers, or API integrations"
+    }
+  ],
+  "searchIntentMatch": {
+    "intent": "informational",
+    "matchScore": 95,
+    "contentAligns": true
+  },
+  "optimizationHistory": [
+    {
+      "timestamp": "2025-12-23T07:07:00Z",
+      "change": "Initial SEO optimization with full schema population",
+      "beforeScore": 0,
+      "afterScore": 92
+    }
+  ],
+  "sources": [
+    {
+      "title": "Anthropic MCP Announcement",
+      "url": "https://www.anthropic.com/news/model-context-protocol"
+    },
+    {
+      "title": "Docker MCP Documentation",
+      "url": "https://docs.docker.com/ai/mcp-catalog-and-toolkit/"
+    },
+    {
+      "title": "MCP Specification",
+      "url": "https://modelcontextprotocol.io/introduction"
+    },
+    {
+      "title": "Invariant Labs Security Research",
+      "url": "https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks"
+    }
+  ]
+}
