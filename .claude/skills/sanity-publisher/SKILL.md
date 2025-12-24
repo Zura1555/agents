@@ -1,12 +1,12 @@
 ---
 name: sanity-publisher
 description: Publishes blog content to Sanity CMS with dual-mode support (markdown output or API publishing)
-version: 1.0.0
+version: 1.2.0
 author: Thuong-Tuan Tran
-tags: [blog, publishing, sanity, cms, automation]
+tags: [blog, publishing, sanity, cms, automation, images]
 ---
 
-# Sanity Publisher
+# Sanity Publisher v1.2.0
 
 You are the **Sanity Publisher**, responsible for formatting and publishing blog content to Sanity CMS. You support both manual publishing (markdown output) and automated publishing (API integration).
 
@@ -76,6 +76,197 @@ Query the draft document and verify ALL fields are populated correctly.
 3. **Dual Publishing Modes**: Support markdown output or direct API publishing
 4. **Metadata Management**: Handle SEO metadata, categories, tags, and author
 5. **Publishing Verification**: Confirm successful publication and provide status
+6. **Image Upload**: Upload generated images and set asset references (v1.2.0)
+
+## Image Upload Protocol (v1.2.0)
+
+When `image-manifest.json` exists in the workspace, the publisher uploads generated images to Sanity and sets the appropriate references.
+
+### Input Enhancement
+Read `{workspacePath}/image-manifest.json` if present.
+
+### Image Upload Workflow
+
+#### Step 1: Check for Image Manifest
+```javascript
+const manifestPath = `${workspacePath}/image-manifest.json`;
+const hasManifest = fs.existsSync(manifestPath);
+const imageManifest = hasManifest ? JSON.parse(fs.readFileSync(manifestPath)) : null;
+```
+
+#### Step 2: Upload Cover Image to Sanity
+```javascript
+// Upload cover image as asset
+if (imageManifest?.cover?.path) {
+  const coverAsset = await client.assets.upload('image',
+    fs.createReadStream(`${workspacePath}/${imageManifest.cover.path}`),
+    { filename: 'cover.png' }
+  );
+
+  // Store asset ID for document reference
+  imageAssets.cover = coverAsset._id;
+}
+```
+
+#### Step 3: Set Cover Image Reference in Document
+```javascript
+// Set coverImage field with uploaded asset reference
+coverImage: imageManifest?.cover?.path ? {
+  _type: 'image',
+  asset: {
+    _type: 'reference',
+    _ref: imageAssets.cover
+  },
+  alt: imageManifest.cover.alt || 'Blog post cover image'
+} : undefined
+```
+
+#### Step 4: Set OG and Twitter Image URLs
+After uploading, the asset URL is available. Use it for social meta images:
+```javascript
+// Get the CDN URL for the uploaded image
+const coverImageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${imageAssets.cover.split('-').slice(1).join('-')}`;
+
+// Set in SEO metadata
+seo: {
+  // ...other fields
+  metaImage: {
+    url: coverImageUrl,
+    alt: imageManifest.cover.alt
+  },
+  openGraph: {
+    // ...other fields
+    image: {
+      url: coverImageUrl,
+      width: 1200,
+      height: 675,
+      alt: imageManifest.cover.alt
+    }
+  },
+  twitter: {
+    // ...other fields
+    image: {
+      url: coverImageUrl,
+      alt: imageManifest.cover.alt
+    }
+  }
+}
+```
+
+#### Step 5: Upload Section Images (for inline content)
+```javascript
+// Upload each section image and store references
+const sectionAssets = [];
+for (const section of imageManifest.sections || []) {
+  if (section.path) {
+    const sectionAsset = await client.assets.upload('image',
+      fs.createReadStream(`${workspacePath}/${section.path}`),
+      { filename: `section-${section.index}.png` }
+    );
+    sectionAssets.push({
+      index: section.index,
+      assetId: sectionAsset._id,
+      alt: section.alt
+    });
+  }
+}
+```
+
+### Content Conversion with Images
+
+When converting markdown content to Portable Text, replace image markdown with Sanity image blocks:
+
+```javascript
+// Convert markdown image syntax to Sanity image block
+// From: ![Alt text](images/section-1.png)
+// To: Sanity image block with asset reference
+
+function convertMarkdownToPortableText(content, sectionAssets) {
+  // Parse markdown and find image references
+  const imageRegex = /!\[(.*?)\]\((images\/section-(\d+)\.png)\)/g;
+
+  // Replace with Sanity image block structure
+  // This creates inline images in the content array
+}
+```
+
+### Image Manifest Integration
+
+Store uploaded asset IDs in `publish-result.json`:
+```json
+{
+  "projectId": "proj-2025-12-24-001",
+  "publishingMode": "api",
+  "status": "success",
+  "sanityResponse": {
+    "documentId": "post-abc123",
+    "publishedId": "post-abc123",
+    "url": "https://zura.id.vn/blog/my-post"
+  },
+  "imageAssets": {
+    "cover": {
+      "assetId": "image-abc123def456",
+      "url": "https://cdn.sanity.io/images/projectId/dataset/abc123def456.png",
+      "alt": "Cover image alt text"
+    },
+    "sections": [
+      {
+        "index": 1,
+        "assetId": "image-ghi789jkl012",
+        "alt": "Section 1 alt text"
+      }
+    ]
+  }
+}
+```
+
+### No Images Scenario
+
+If `image-manifest.json` doesn't exist or has errors:
+1. **Skip image upload** - continue with text-only publishing
+2. **Log warning** in publish-result.json:
+   ```json
+   {
+     "warnings": [
+       {
+         "type": "missing_images",
+         "message": "No image manifest found - publishing without cover image",
+         "impact": "Post will have no featured image",
+         "recommendation": "Manually add cover image in Sanity Studio"
+       }
+     ]
+   }
+   ```
+3. **Leave coverImage field empty** - Sanity allows optional cover images
+4. **Use placeholder for OG/Twitter** - Or leave empty for social platforms to generate preview
+
+### Error Handling for Image Upload
+
+```javascript
+// Handle image upload failures gracefully
+try {
+  const coverAsset = await client.assets.upload('image', ...);
+} catch (error) {
+  console.warn(`Cover image upload failed: ${error.message}`);
+  // Continue without cover image
+  warnings.push({
+    type: 'image_upload_failed',
+    message: `Could not upload cover image: ${error.message}`,
+    severity: 'warning',
+    recommendation: 'Manually upload cover image in Sanity Studio'
+  });
+}
+```
+
+### Image Validation Checklist
+
+Before publishing with images:
+- [ ] image-manifest.json exists and is valid JSON
+- [ ] cover.png file exists at specified path
+- [ ] All section images exist at specified paths
+- [ ] All images have alt text in manifest
+- [ ] Image files are valid PNG format
+- [ ] Images are reasonable size (< 5MB each)
 
 ## Publishing Modes
 

@@ -1,14 +1,58 @@
 ---
 name: blog-master-orchestrator
-description: Central coordinator for blog writing workflow
-version: 1.2.0
+description: Central coordinator for blog writing workflow with multi-agent execution. USE WHEN user says 'write a blog post', 'create blog content', 'start blog workflow', OR user wants to orchestrate the full blog writing pipeline.
+version: 2.0.0
 author: Thuong-Tuan Tran
-tags: [blog, writing, orchestration, workflow, authenticity]
+tags: [blog, writing, orchestration, workflow, authenticity, multi-agent]
 ---
 
-# Blog Master Orchestrator v1.2.0
+# Blog Master Orchestrator v2.0.0
 
-You are the **Blog Master Orchestrator**, responsible for coordinating the entire blog writing workflow from initial request to published post.
+You are the **Blog Master Orchestrator**, responsible for coordinating the entire blog writing workflow from initial request to published post using real multi-agent execution via Claude's Task tool.
+
+## Workflow Routing
+
+**When executing a workflow, output this notification:**
+
+```
+Running the **ExecutePhase** workflow from the **blog-master-orchestrator** skill...
+```
+
+| Workflow | Trigger | File |
+|----------|---------|------|
+| **ExecutePhase** | "run phase", "execute workflow" | `workflows/ExecutePhase.md` |
+
+## Multi-Agent Execution Protocol (v2.0.0)
+
+**CRITICAL**: This orchestrator uses Claude's Task tool to spawn real subagents for each phase. Each subagent runs autonomously and returns results.
+
+### Task Tool Pattern
+
+For each phase, invoke the Task tool with:
+1. **subagent_type**: Appropriate agent type (researcher, writer, general-purpose)
+2. **model**: "sonnet" for standard tasks, "haiku" for quick validation
+3. **prompt**: Phase-specific prompt with [AGENT:type] tag for hook routing
+
+### Agent Tags for Hook Integration
+
+Every subagent prompt MUST include an agent tag for voice notification routing:
+- `[AGENT:researcher]` - Research phase
+- `[AGENT:synthesizer]` - Synthesis phase
+- `[AGENT:writer-tech]` or `[AGENT:writer-personal]` - Writing phase
+- `[AGENT:seo]` - SEO optimization phase
+- `[AGENT:image-generator]` - Image generation phase
+- `[AGENT:style]` - Style review phase
+- `[AGENT:publisher]` - Publishing phase
+- `[AGENT:promoter]` - Social promotion phase
+
+### Completion Signal Pattern
+
+Every subagent must end with:
+```
+COMPLETED: [AGENT:type] {phase} complete - {brief summary}
+```
+
+This triggers the SubagentStop hook for voice notifications and history capture.
 
 ## Core Responsibilities
 
@@ -48,6 +92,17 @@ You are the **Blog Master Orchestrator**, responsible for coordinating the entir
 - **CRITICAL**: Must validate character limits (Meta Title: 50-60, Meta Description: 150-160, OG Description: 100-120)
 - **CRITICAL**: Must populate ALL SEO schema fields
 
+### Phase 4.5: Image Generation (blog-image-generator)
+- **Input**: seo-optimized-draft.md, seo-metadata.json
+- **Output**: image-manifest.json, images/ directory
+- **Agent**: Uses Art skill via BlogImages workflow
+- **Model**: Configurable (nano-banana default, flux for quality)
+- **Images Generated**:
+  - Cover image (16:9, 1200x675) - REQUIRED for OG/Twitter cards
+  - Section images - Based on placeholders in content
+- **CRITICAL**: Must complete BEFORE style review
+- **Graceful Degradation**: Pipeline continues if image generation fails
+
 ### Phase 5: Style Review (style-guardian)
 - **Input**: seo-optimized-draft.md, brand-style.json
 - **Output**: polished-draft.md, style-report.md
@@ -86,6 +141,15 @@ You are the **Blog Master Orchestrator**, responsible for coordinating the entir
     "synthesis": { "status": "pending|in_progress|complete|error", "output": "content-outline.md" },
     "writing": { "status": "pending|in_progress|complete|error", "output": "draft-[type].md" },
     "seo": { "status": "pending|in_progress|complete|error", "output": "seo-optimized-draft.md" },
+    "image_generation": {
+      "status": "pending|in_progress|complete|error|skipped",
+      "output": "image-manifest.json",
+      "config": {
+        "model": "nano-banana",
+        "generateCover": true,
+        "generateSections": true
+      }
+    },
     "review": { "status": "pending|in_progress|complete|error", "output": "polished-draft.md" },
     "publishing": { "status": "pending|in_progress|complete|error", "output": "sanity-ready-post.md" },
     "social": { "status": "pending|in_progress|complete|error", "output": "social-posts.md" }
@@ -169,7 +233,13 @@ Phase 6 (Publishing) validation failure:
 {
   "topic": "Your blog topic here",
   "contentType": "tech|personal-dev",
-  "publishingMode": "markdown|api|ask-user"
+  "publishingMode": "markdown|api|ask-user",
+  "imageConfig": {
+    "enabled": true,
+    "model": "nano-banana|flux",
+    "generateCover": true,
+    "generateSections": true
+  }
 }
 ```
 
