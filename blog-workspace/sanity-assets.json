@@ -1,0 +1,37 @@
+{
+  "docker-mcp-cover": {
+    "_id": "image-7a51b485a1f08b143017f31fb381ed06315d5e52-1344x768-png",
+    "url": "https://cdn.sanity.io/images/w486ji4p/production/7a51b485a1f08b143017f31fb381ed06315d5e52-1344x768.png",
+    "alt": "Visual metaphor showing tokens being funneled through Docker container with dramatic 98.7% reduction"
+  },
+  "docker-mcp-token-dashboard": {
+    "_id": "image-213ea6ba3fb68c698adb6d6edeb8e6816f5940a2-1344x768-png",
+    "url": "https://cdn.sanity.io/images/w486ji4p/production/213ea6ba3fb68c698adb6d6edeb8e6816f5940a2-1344x768.png",
+    "alt": "Dashboard displaying massive token consumption before user interaction begins"
+  },
+  "docker-mcp-comparison": {
+    "_id": "image-52106757432d910338cd638ad68390ea6e6b7da5-1344x768-png",
+    "url": "https://cdn.sanity.io/images/w486ji4p/production/52106757432d910338cd638ad68390ea6e6b7da5-1344x768.png",
+    "alt": "Visual comparison of traditional upfront loading vs Docker MCP's on-demand approach"
+  },
+  "docker-mcp-reduction-chart": {
+    "_id": "image-d7944de8bbdd296eec3783ffeec5be41882179ab-1344x768-png",
+    "url": "https://cdn.sanity.io/images/w486ji4p/production/d7944de8bbdd296eec3783ffeec5be41882179ab-1344x768.png",
+    "alt": "Bar chart dramatically illustrating 98.7% token reduction from 150,000 to 2,000 tokens"
+  },
+  "docker-mcp-data-flow": {
+    "_id": "image-8ba30d826df3ff7b8ac275dae53178bdf152878e-1344x768-png",
+    "url": "https://cdn.sanity.io/images/w486ji4p/production/8ba30d826df3ff7b8ac275dae53178bdf152878e-1344x768.png",
+    "alt": "Technical diagram illustrating filtered data flow in Docker MCP versus raw data transmission"
+  },
+  "docker-mcp-architecture": {
+    "_id": "image-f9d501c7ca4265ef27b17aa32e7d3bcd1bc6bd51-1344x768-png",
+    "url": "https://cdn.sanity.io/images/w486ji4p/production/f9d501c7ca4265ef27b17aa32e7d3bcd1bc6bd51-1344x768.png",
+    "alt": "Enterprise architecture diagram showing simplified workflow with Docker MCP"
+  },
+  "docker-mcp-performance": {
+    "_id": "image-b14f8e18dd78887c1df125d5f1e40c9edd9d49bd-1344x768-png",
+    "url": "https://cdn.sanity.io/images/w486ji4p/production/b14f8e18dd78887c1df125d5f1e40c9edd9d49bd-1344x768.png",
+    "alt": "Performance dashboard displaying token reduction, speed improvements, and cost savings"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "generatedAt": "2025-12-25T06:45:00.000Z",
+  "model": "nano-banana",
+  "brandColors": {
+    "main": "#0D0727",
+    "primary": "#336DC5",
+    "secondary": "#3489CD"
+  },
+  "signature": "Zura",
+  "cover": {
+    "path": "images/cover.png",
+    "alt": "Visual metaphor showing tokens being funneled through Docker container with dramatic 98.7% reduction",
+    "caption": "Docker MCP reduces context consumption by 98.7%",
+    "dimensions": { "width": 1200, "height": 675 },
+    "prompt": "Editorial conceptual illustration for Docker MCP reducing AI context consumption - bucket of tokens funneled through Docker whale shape"
+  },
+  "sections": [
+    {
+      "index": 1,
+      "placeholderId": "token-dashboard",
+      "type": "illustration",
+      "path": "images/section-1.png",
+      "alt": "Dashboard screenshot displaying massive token consumption before user interaction begins",
+      "caption": "Real-time token consumption dashboard showing 150,000 tokens consumed before first user message",
+      "dimensions": { "width": 1200, "height": 675 }
+    },
+    {
+      "index": 2,
+      "placeholderId": "mcp-comparison",
+      "type": "infographic",
+      "path": "images/section-2.png",
+      "alt": "Visual comparison of traditional upfront loading vs Docker MCP's on-demand approach",
+      "caption": "MCP tool loading comparison - all tools upfront vs on-demand loading",
+      "dimensions": { "width": 1200, "height": 675 }
+    },
+    {
+      "index": 3,
+      "placeholderId": "token-reduction-chart",
+      "type": "infographic",
+      "path": "images/section-3.png",
+      "alt": "Bar chart dramatically illustrating 98.7% token reduction from 150,000 to 2,000 tokens",
+      "caption": "98.7% token reduction visualization (150K → 2K tokens)",
+      "dimensions": { "width": 1200, "height": 675 }
+    },
+    {
+      "index": 4,
+      "placeholderId": "data-flow-diagram",
+      "type": "diagram",
+      "path": "images/section-4.png",
+      "alt": "Technical diagram illustrating filtered data flow in Docker MCP versus raw data transmission in traditional MCP",
+      "caption": "Data flow comparison - Docker MCP filters data before sending to model",
+      "dimensions": { "width": 1200, "height": 675 }
+    },
+    {
+      "index": 5,
+      "placeholderId": "architecture-comparison",
+      "type": "comparison",
+      "path": "images/section-5.png",
+      "alt": "Enterprise architecture diagram showing simplified workflow with Docker MCP",
+      "caption": "Before/after enterprise architecture - complex to streamlined",
+      "dimensions": { "width": 1200, "height": 675 }
+    },
+    {
+      "index": 6,
+      "placeholderId": "performance-dashboard",
+      "type": "illustration",
+      "path": "images/section-6.png",
+      "alt": "Performance dashboard displaying token reduction, speed improvements, and cost savings",
+      "caption": "Comprehensive performance metrics - tokens, time, and cost improvements",
+      "dimensions": { "width": 1200, "height": 675 }
+    }
+  ],
+  "stats": {
+    "totalImages": 7,
+    "coverGenerated": true,
+    "sectionsGenerated": 6,
+    "skipped": 0,
+    "skippedReason": []
+  }
+}

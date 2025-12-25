@@ -22,6 +22,9 @@ wordCount: 1778
 style:
   score: "95/100"
   type: "tech"
+coverImage:
+  src: "images/cover.png"
+  alt: "Visual metaphor showing tokens being funneled through Docker container with dramatic 98.7% reduction"
 ---
 
 # Docker MCP: Solving the Model Context Protocol's Context Consumption Crisis
@@ -38,7 +41,8 @@ For many of us in the trenches, this isn't hypothetical—it's happening right n
 
 This is the context consumption crisis—and it's threatening to undermine everything we've built with MCP.
 
-🖼️ **Suggested Image Placeholder**: Real-time token consumption dashboard showing 150,000 tokens consumed before first user message. Alt text: "Dashboard screenshot displaying massive token consumption before user interaction begins".
+![Dashboard displaying massive token consumption before user interaction begins](images/section-1.png)
+*Real-time token consumption dashboard showing 150,000 tokens consumed before first user message*
 
 ---
 
@@ -75,7 +79,8 @@ This isn't just a theoretical problem. Developers are reporting:
 
 As one developer put it: *"I love what MCP enables, but I can't justify the token costs to my CTO for production use."*
 
-🖼️ **Suggested Image Placeholder**: Infographic comparing MCP tool loading (all tools upfront) vs Docker MCP (on-demand loading). Alt text: "Visual comparison of traditional upfront loading vs Docker MCP's on-demand approach".
+![Visual comparison of traditional upfront loading vs Docker MCP's on-demand approach](images/section-2.png)
+*MCP tool loading comparison: all tools upfront vs on-demand loading*
 
 ---
 
@@ -109,7 +114,8 @@ The impact is staggering:
 
 This isn't incremental improvement—it's a complete paradigm shift.
 
-🖼️ **Suggested Image Placeholder**: Bar chart visualization showing 98.7% token reduction (150K → 2K tokens). Alt text: "Bar chart dramatically illustrating 98.7% token reduction from 150,000 to 2,000 tokens".
+![Bar chart dramatically illustrating 98.7% token reduction from 150,000 to 2,000 tokens](images/section-3.png)
+*98.7% token reduction visualization (150K → 2K tokens)*
 
 ---
 
@@ -195,7 +201,8 @@ Docker MCP provides **privacy by default**:
 - Only essential information transmitted to LLM
 - Complete audit trail of operations
 
-🖼️ **Suggested Image Placeholder**: Diagram showing data flow in Docker MCP vs Traditional MCP. Alt text: "Technical diagram illustrating filtered data flow in Docker MCP versus raw data transmission in traditional MCP".
+![Technical diagram illustrating filtered data flow in Docker MCP versus raw data transmission in traditional MCP](images/section-4.png)
+*Data flow comparison: Docker MCP filters data before sending to model*
 
 ---
 
@@ -248,7 +255,8 @@ const results = await workflow.execute({
 - More tools in production
 - Increased developer adoption
 
-🖼️ **Suggested Image Placeholder**: Before/after comparison showing enterprise architecture before Docker MCP (complex, token-heavy) and after (streamlined, efficient). Alt text: "Enterprise architecture diagram showing simplified workflow with Docker MCP".
+![Enterprise architecture diagram showing simplified workflow with Docker MCP](images/section-5.png)
+*Before/after enterprise architecture: complex to streamlined*
 
 ---
 
@@ -281,7 +289,8 @@ const results = await workflow.execute({
 
 *Estimates based on average token costs and typical workflow patterns*
 
-🖼️ **Suggested Image Placeholder**: Comprehensive performance dashboard showing all metrics (tokens, time, cost) in a unified visualization. Alt text: "Performance dashboard displaying token reduction, speed improvements, and cost savings".
+![Performance dashboard displaying token reduction, speed improvements, and cost savings](images/section-6.png)
+*Comprehensive performance metrics: tokens, time, and cost improvements*
 
 ---
 
