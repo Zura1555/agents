@@ -133,20 +133,62 @@ def run_phase(state: Dict[str, Any], phase: str, agent_name: str, input_data: Di
                     update_phase_status(state, phase, "complete")
                     return True
 
-            # Execute agent (in real implementation, this would call the actual agent)
+            # Execute agent (Task tool trigger)
             print(f"Executing {agent_name}...")
             print(f"Input: {json.dumps(input_data, indent=2)}")
 
-            # Simulate agent execution
-            # TODO: Replace with actual agent execution
-            # This would typically involve:
-            # 1. Loading the agent skill
-            # 2. Providing it with the input data
-            # 3. Capturing its output
-            # 4. Validating the output
+            # Construct the prompt for the agent
+            prompt_text = f"""
+            Please execute the '{agent_name}' for the '{phase}' phase.
+
+            CONTEXT:
+            Project ID: {state['projectId']}
+            Topic: {state['topic']}
+            Input Data: {json.dumps(input_data, indent=2)}
+
+            INSTRUCTIONS:
+            1. Read input files from {workspace}
+            2. Perform the {phase} tasks
+            3. Write output to {state['phases'][phase]['output']}
+            4. Update state.json
+
+            Use the appropriate [AGENT:{phase}] tag in your response.
+            """
+
+            # Output instructions for Claude to trigger the Task tool
+            print(f"\n[CLAUDE-TASK-TRIGGER]")
+            print(f"Please run the Task tool with the following parameters:")
+            print(f"Tool: Task")
+            print(f"Argument 'content': {json.dumps(prompt_text)}")
+            print(f"Argument 'activeForm': \"Running {agent_name} for phase {phase}\"")
+            print(f"Argument 'subagent_type': \"general-purpose\"")
+            print(f"[/CLAUDE-TASK-TRIGGER]\n")
+
+            # Wait for output artifact
+            expected_output = state["phases"][phase].get("output")
+            if expected_output:
+                output_path = workspace / expected_output
+                print(f"Waiting for agent to produce: {output_path}")
+
+                # Check every 5 seconds for up to 5 minutes (adjust as needed)
+                max_wait_seconds = 300
+                wait_interval = 5
+                elapsed = 0
+
+                import time
+                while elapsed < max_wait_seconds:
+                    if output_path.exists() and output_path.stat().st_size > 0:
+                        print(f"\n[OK] Found output file: {expected_output}")
+                        break
+
+                    time.sleep(wait_interval)
+                    elapsed += wait_interval
+                    print(f".", end="", flush=True)
+                else:
+                    raise TimeoutError(f"Agent {agent_name} failed to produce output {expected_output} within {max_wait_seconds} seconds")
 
             update_phase_status(state, phase, "complete")
-            print(f"[OK] Phase {phase} completed successfully")
+            print(f"\n[OK] Phase {phase} completed successfully")
             return True
 
         except Exception as e:
