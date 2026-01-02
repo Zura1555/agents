@@ -1,0 +1,89 @@
+{
+  "projectId": "proj-2026-01-02-001",
+  "topic": "Scaffolding in Agentic Coding - exploring Daniel Miessler's thesis 'scaffolding > Model' with Ray Fernando's practical hooks implementation",
+  "contentType": "tech",
+  "publishingMode": "markdown",
+  "status": "complete",
+  "createdAt": "2026-01-02T13:30:00Z",
+  "author": "Thuong-Tuan Tran",
+  "brandVoice": "Professional & Friendly Authentic",
+  "phases": {
+    "initialization": {
+      "status": "complete",
+      "output": "state.json",
+      "completedAt": "2026-01-02T13:30:00Z"
+    },
+    "research": {
+      "status": "complete",
+      "output": "research-findings.json",
+      "completedAt": "2026-01-02T13:40:00Z"
+    },
+    "synthesis": {
+      "status": "complete",
+      "output": "content-outline.md",
+      "completedAt": "2026-01-02T13:50:00Z"
+    },
+    "writing": {
+      "status": "complete",
+      "output": "draft-tech.md",
+      "completedAt": "2026-01-02T14:00:00Z"
+    },
+    "seo": {
+      "status": "complete",
+      "output": "seo-optimized-draft.md",
+      "completedAt": "2026-01-02T14:10:00Z"
+    },
+    "image_generation": {
+      "status": "skipped",
+      "output": null,
+      "config": {
+        "model": "nano-banana",
+        "generateCover": false,
+        "generateSections": false
+      }
+    },
+    "review": {
+      "status": "complete",
+      "output": "polished-draft.md",
+      "completedAt": "2026-01-02T14:15:00Z"
+    },
+    "publishing": {
+      "status": "complete",
+      "output": "sanity-ready-post.md",
+      "completedAt": "2026-01-02T14:20:00Z"
+    },
+    "social": {
+      "status": "complete",
+      "output": "social-posts.md",
+      "completedAt": "2026-01-02T14:25:00Z"
+    }
+  },
+  "metadata": {
+    "wordCount": 2680,
+    "seoScore": 95,
+    "styleScore": 94,
+    "errors": [],
+    "sources": [
+      "https://danielmiessler.com/blog/personal-ai-infrastructure",
+      "blog-workspace/active-projects/proj-2026-01-02-001/scaffolding-in-ai/tactiq-free-transcript-FdF787XcNo8.txt",
+      "https://github.com/microsoft/autogen",
+      "https://www.crewai.com",
+      "https://docs.langchain.com/oss/python/langgraph/overview",
+      "https://developers.llamaindex.ai/python/framework/",
+      "https://python.langchain.com/docs/",
+      "https://www.langchain.com/langsmith",
+      "https://www.agentops.ai",
+      "https://semantic-kernel.com",
+      "https://github.com/langchain-ai/langgraph",
+      "https://react-lm.github.io/"
+    ],
+    "researchEnhancement": {
+      "enhancedAt": "2026-01-02T23:00:00Z",
+      "additionalSources": 15,
+      "newSections": ["Framework Landscape", "Production Best Practices", "Real-World Case Studies"],
+      "totalCitations": 22,
+      "frameworks": ["LangChain/LangGraph", "CrewAI", "Microsoft AutoGen", "LlamaIndex", "Semantic Kernel"],
+      "caseStudies": ["CrewAI Fortune 500 Deployment", "LangChain + LangSmith Production Observability"]
+    }
+  }
+}

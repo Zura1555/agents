@@ -1,0 +1,297 @@
+# tactiq.io free youtube transcript
+# Your AI Agent Isn't Dumb. It Needs Guardrails.
+# https://www.youtube.com/watch/FdF787XcNo8
+
+00:00:00.240 Every time my AI agent wrote code, I was
+00:00:03.200 spending time manually verifying
+00:00:05.120 everything by running llinters by hand,
+00:00:07.600 checking the types, and rebuilding the
+00:00:09.599 code. I know it's really dumb, right?
+00:00:11.200 So, let me just give you a breakdown of
+00:00:12.719 what's happening. I have a backend
+00:00:14.719 that's written in Rust, and as soon as
+00:00:16.960 the AI agent would write the code, it
+00:00:19.119 would then just try to write code for
+00:00:20.960 the front end. So, when they would start
+00:00:22.880 talking, things would actually be out of
+00:00:24.480 sync. And I was spending a lot of time
+00:00:25.920 just basically babysitting my AI instead
+00:00:28.400 of building on things. And that's where
+00:00:30.560 I actually found out the power of hooks.
+00:00:32.719 And today I'm actually going to talk to
+00:00:34.559 you about how hooks can actually run
+00:00:36.800 automatically when files change. And
+00:00:39.040 this is really important because when an
+00:00:40.559 agent writes the rest code now, the
+00:00:43.200 hooks are actually going to regenerate
+00:00:44.719 the TypeScript types for the front end.
+00:00:46.879 And so whenever the agent is also going
+00:00:48.800 to write anything else, it's also going
+00:00:50.559 to run the linting tasks. And we're
+00:00:52.879 going to talk more a little bit about
+00:00:54.079 that. and the agent finishes this whole
+00:00:56.480 task, it's actually going to run a
+00:00:58.559 validation of the build. And so in one
+00:01:01.680 request, we're able to get these extra
+00:01:03.920 steps in without me being involved. And
+00:01:07.119 the agent will actually feel much
+00:01:09.439 smarter because it's fixing its own
+00:01:10.960 mistakes along the way. I don't want you
+00:01:12.880 to make the same mistake and spend
+00:01:15.040 hundreds of thousands of tokens on
+00:01:17.759 fixing all these little nuances. So, if
+00:01:19.840 you stay to the end of this video, I'm
+00:01:21.600 going to show you how to set up these
+00:01:23.119 hooks inside of Cursor. And I'm also
+00:01:25.360 going to go over how Factory Droid does
+00:01:27.520 it differently. And there's also some
+00:01:28.960 advantages that it has that is a little
+00:01:30.720 bit different than cursor as well. So,
+00:01:32.240 let me show you how this actually works.
+00:01:34.079 The reason why we're creating the hooks
+00:01:35.360 for those who are kind of wondering is
+00:01:36.560 that after the files edited, I want
+00:01:38.479 these uh types to be generated from any
+00:01:41.680 Rust code that we touch and so that way
+00:01:44.240 the front end will be able to pick them
+00:01:45.439 up when we start running front-end code.
+00:01:47.360 So that's kind of uh where we were doing
+00:01:49.920 that. And then on stop I wanted to do
+00:01:51.520 some specific uh scripts here. And the
+00:01:54.000 hooks what they do is as soon as the
+00:01:55.840 backend server code is written cursor
+00:01:58.000 will then kick off a script or an
+00:02:00.320 whatever AI agent will kick off a hook
+00:02:02.159 script to build all the types for the
+00:02:04.240 backend server that are in Rust. And
+00:02:06.399 then from there, you know, as part of
+00:02:08.000 space space-time DB framework, uh, we
+00:02:10.239 can then pull that to the front end and
+00:02:11.599 the front end can then, you know, as
+00:02:12.879 you're writing code, the AI agent can
+00:02:14.720 then check the types and say, okay,
+00:02:16.000 wait, the types are failing here. I
+00:02:17.920 should actually, you know, do the right
+00:02:19.360 thing and so forth. So, um, that is
+00:02:22.000 super important to get down and we're
+00:02:23.360 going to make sure we do that. The
+00:02:24.319 hooks, JSON can live in three locations.
+00:02:26.640 All are combined. So, in the project
+00:02:29.599 cursor hooks JSON, this is per project
+00:02:31.760 hooks in the user global state or
+00:02:35.200 systemwide. Okay. So, it's going to be
+00:02:36.560 in the project your kickoff you you'd
+00:02:38.800 put it into cursor hooks JSON. So, okay.
+00:02:42.319 Oh, okay. So, it doesn't go into folder
+00:02:44.480 hooks. Got [music] it. So, I don't need
+00:02:46.879 the folder then. Delete. Perfect. Okay.
+00:02:50.959 And then here, I could just copy and
+00:02:52.879 paste this.
+00:02:55.120 Yes. Okay. use Exa Codem MCP to look up
+00:03:00.959 the Spacetime DB um docs on generating
+00:03:05.440 types with Rust with our Rust server as
+00:03:10.959 we
+00:03:12.640 wanted to make sure the AI agent had the
+00:03:16.879 scaffolding
+00:03:18.879 had [music] what it needed after. All
+00:03:21.360 right, so let's see. So your project has
+00:03:24.720 rust server generated types when the AI
+00:03:27.680 agents when AI agents or you modify type
+00:03:30.959 bindings need to be generated in the
+00:03:32.720 client so it stays in sync. So create
+00:03:34.879 hooks directory script. Okay. So we need
+00:03:36.799 to create the script make the script
+00:03:38.799 executable. So how it works after edit
+00:03:40.959 hook fires when cursor edits an event.
+00:03:43.599 Yes. If yes spacetime runs generate to
+00:03:46.400 generate. Okay. Alternative simpler
+00:03:49.760 unconditional hook. If you want just to
+00:03:51.519 always regenerate regardless of the file
+00:03:53.440 that's changed, we can just do this on
+00:03:55.920 file edit. [music] Got it. No, if we
+00:03:57.840 touch the file, I think we should just
+00:03:59.040 generate. This is simpler but runs on
+00:04:01.120 every file edit. Maybe slower. Yeah,
+00:04:02.560 exactly. Here's what I set up. The hooks
+00:04:04.319 generate binding script that runs in
+00:04:05.920 file edits. So when cursor AI agents
+00:04:08.319 edits any file after edit hook fires,
+00:04:10.400 the script checks if the edited file is
+00:04:12.319 in src. Is that where our code is? Yeah,
+00:04:17.199 it is. Okay. Nice. And uh if yes, it
+00:04:21.358 runs a space-time generate um and to
+00:04:24.000 generate the TypeScript bindings in
+00:04:25.600 libid module bindings. Okay, now when
+00:04:28.000 your agent fires. Okay, cool. So I think
+00:04:31.520 we got the correct thing set up now with
+00:04:34.240 our regenerate bindings. What about
+00:04:36.720 after file edit? Okay, so
+00:04:40.000 I see the plan has more comprehensive
+00:04:41.520 hooks than we created. Let me spec out
+00:04:42.960 the remaining work. Okay, so we have
+00:04:44.479 after file edit here and then onstop
+00:04:46.880 hook which was the final validation and
+00:04:49.440 then npm scripts after file edit we're
+00:04:52.000 just doing everything like if it's in
+00:04:54.240 here run these bindings if if it has
+00:04:56.560 ends with the typescript just run b
+00:04:58.320 eslint bunpix if also since we touch any
+00:05:02.400 files in the uh rust back end we're
+00:05:04.800 going to just run cargo uh so what does
+00:05:07.280 it say yeah cd server and cargo clippy
+00:05:09.919 and it's just going to basically run it
+00:05:11.360 okay and then on stop whenever Whenever
+00:05:13.680 the agent finishes writing, it's going
+00:05:15.520 to just
+00:05:17.680 do a rust check. So, cargo check and
+00:05:20.000 then see if there's any errors. And then
+00:05:22.160 we're just basically updating it. So,
+00:05:23.680 after file edit and then onstop. Okay,
+00:05:26.479 that's cool. I like this plan. It's a
+00:05:28.000 little more clean. The thing with hooks
+00:05:29.120 that you have to be mindful is that
+00:05:30.160 every time the agent runs, they're going
+00:05:31.680 to run at those specific steps. [music]
+00:05:33.520 You know, like at the, you know, before
+00:05:35.120 the agent runs, in the middle of the
+00:05:36.479 agent run, like if it writes to a file,
+00:05:38.240 or like afterwards if it stops, right?
+00:05:39.840 like if you have a whole bunch of things
+00:05:41.360 you need to do, it may feel like your
+00:05:43.039 agent's super slow after that. So just
+00:05:45.680 beware. Okay,
+00:05:47.808 [laughter and gasps]
+00:05:48.400 so the factory droid versus cursor
+00:05:50.160 hooks. So it says factory droid has
+00:05:52.393 [music] like a factory settings and
+00:05:54.400 cursor has docursor hooks. The
+00:05:56.080 advantages of factory droids tool
+00:05:57.600 mattress can target specific tools like
+00:05:59.440 edit, write, bash, and GP and more
+00:06:01.919 granular events like session start,
+00:06:03.840 session ends, sub aent stop, pre-ompact,
+00:06:06.400 and has built-in/hooks commands to
+00:06:08.240 manage hooks interactively. So to enable
+00:06:10.400 hooks, run settings, hooks enabled
+00:06:12.319 toggle. So slash settings
+00:06:16.000 and then hooks. Where's my hooks? Hooks
+00:06:18.240 enabled. Okay, cool. Would you like me
+00:06:20.720 to create the compatible hooks? Yes,
+00:06:22.639 please. All right, so here we are. All
+00:06:24.319 right, we're going to create the hooks
+00:06:25.360 now for the project inside a factory cuz
+00:06:27.600 I use factory droid as well. Um it's
+00:06:29.919 good to do this type of research ahead
+00:06:31.680 of time because um you can see what the
+00:06:34.720 differences are between the two
+00:06:35.840 different platforms versus just telling
+00:06:37.199 the AI agent to do it. And since we're
+00:06:39.600 using a cloud model, it's probably going
+00:06:40.800 to say I know how to write cloud hooks.
+00:06:42.829 [laughter] But the uh implementation
+00:06:44.400 details actually do matter here. So you
+00:06:45.919 can kind of see here we are factory.
+00:06:47.440 Yeah, here we are. Post tool use. We
+00:06:50.560 have hooks. We have the scripts here for
+00:06:53.360 stop hook. Dang.
+00:06:56.240 Nice. Okay. Hooks post to you stop
+00:06:58.800 session start. Oh, what's session start?
+00:07:02.160 Um, starting session ensuring bindings
+00:07:05.039 are current. Oh, so whenever the agent
+00:07:07.360 runs and starts a session, it basically
+00:07:09.599 tries to make sure that the bindings are
+00:07:11.440 set before it even starts to write the
+00:07:13.440 code. So, it doesn't make any
+00:07:14.560 assumptions about the code it writes.
+00:07:16.400 Super smart. We're setting up our hooks
+00:07:18.560 files and making good changes here.
+00:07:21.039 Damn,
+00:07:24.000 this is wild. It's literally writing it
+00:07:25.759 like in Typescript and shell. That's
+00:07:27.440 interesting.
+00:07:29.440 So, the shell script kicks off the
+00:07:30.880 TypeScript file and runs it in bun.
+00:07:32.880 Cursor hooks have been reviewed and both
+00:07:35.759 systems will now automatically
+00:07:36.880 regenerate DB TypeScript findings when
+00:07:38.800 Rust files change. And all commands have
+00:07:40.479 dock catch and true so the failure
+00:07:42.000 doesn't break the hook. Here's the key
+00:07:43.919 findings from the Spacetime DB docs. You
+00:07:45.919 cannot use traditional cargo build. So,
+00:07:47.919 here's the file. The problem command was
+00:07:50.160 this. Okay. Why fails? This because of
+00:07:52.560 web assembly. So the correct commands
+00:07:54.960 instead of cargo build cargo check.
+00:07:56.560 Would you like me to fix the hooks? Yes.
+00:07:58.560 So now our hooks and stuff are
+00:07:59.840 configured in here correctly. The
+00:08:01.520 biggest thing I do is planning. And I
+00:08:03.440 may spend 100,000 tokens in planning,
+00:08:05.840 but you see how much it saves us, right?
+00:08:08.000 And then I'm setting up the scaffolding,
+00:08:09.440 the tooling. like I don't have to go in
+00:08:12.000 a aentic loop to fix a lot of like
+00:08:15.199 compile issues because that's already
+00:08:16.879 being done in like a hooks call, right?
+00:08:19.280 So like by the fact that like the agent
+00:08:21.039 runs a hook to do linting or if it's
+00:08:23.599 doing something in the server like all
+00:08:24.960 these best practices kind of help save
+00:08:26.800 you on cost too. So when our agent
+00:08:28.879 starts writing code, uh, at the time
+00:08:30.720 that it's writing code, cursor and
+00:08:33.200 factory droid and all those different
+00:08:34.640 agent files will actually be able to,
+00:08:36.640 uh, as they're writing code be able to
+00:08:38.240 like check things, make sure they work,
+00:08:39.519 and if it doesn't, continue to iterate
+00:08:41.120 on those fixes. So we have a lot of
+00:08:43.039 scaffolding in place now to run a lot of
+00:08:44.880 things autonomously, which is very
+00:08:46.560 helpful for now giving instructions to
+00:08:48.800 the agents to write code. [music] From
+00:08:50.240 here on forward, it should sort of feel
+00:08:52.320 magical that the agent always gets code
+00:08:54.399 right or is fixing bugs cuz we want to
+00:08:56.480 spend more time prompting and adding
+00:08:58.080 features. So, I think we should just
+00:09:00.000 build it. So, here's part one. Fix kick
+00:09:03.519 shoot, right? Okay, let's go and build
+00:09:05.839 it. This looks good. So, game scene
+00:09:08.320 finished already. Damn. Damn. Okay,
+00:09:12.320 cursor is cooking. Excellent. The
+00:09:14.136 [music] Rust build now works. Let me run
+00:09:15.920 a type check. Beautiful. Beautiful. Ah,
+00:09:18.560 I love having my hook set up correctly
+00:09:20.160 in cursor. It's so nice. Okay, I need to
+00:09:24.160 update the actions to pass the new
+00:09:25.839 direction parameters. It's so beautiful.
+00:09:28.080 So now whenever code changes, the hooks
+00:09:30.720 actually validate everything
+00:09:32.320 automatically. And the agent actually
+00:09:34.480 catches the errors before we even see
+00:09:36.560 them. This is the scaffolding that let
+00:09:38.640 you ship and not just vibe code. I still
+00:09:41.360 need to test if this actually holds up
+00:09:43.120 when we add multiplayer. So, in the next
+00:09:45.200 stream, I'm going to actually test if
+00:09:47.440 this holds up when we add multiplayer.
+00:09:49.440 I'm going to have about 10 different
+00:09:51.040 people playing all at once and try to
+00:09:52.880 see if this thing doesn't explode.
+00:09:54.091 [music] So, I don't know if you realize,
+00:09:55.600 but the agent actually isn't smarter as
+00:09:58.160 a result of this. We're just giving it
+00:10:00.320 better guard rails. And if you're
+00:10:02.320 thinking a little bit further, and
+00:10:03.839 you're probably already realizing this,
+00:10:05.839 this is actually what separates
+00:10:07.279 prompting from just praying and hoping
+00:10:09.680 everything [music] just builds in
+00:10:10.720 production. Drop in the comments what
+00:10:12.800 hooks you're actually building with in
+00:10:14.399 your projects. What are you doing
+00:10:15.760 differently inside of Droid and Cursor?
+00:10:17.440 I really want to hear about it. All
+00:10:18.880 right, folks.

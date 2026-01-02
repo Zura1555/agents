@@ -1,0 +1,298 @@
+{
+  "projectId": "proj-2026-01-02-001",
+  "topic": "Scaffolding in Agentic Coding",
+  "contentType": "tech",
+  "researchDate": "2026-01-02T13:35:00Z",
+  "summary": {
+    "keyInsights": [
+      "Scaffolding (infrastructure) matters more than raw model intelligence - a well-designed system with an average model outperforms a brilliant model in a poorly-designed system",
+      "Hooks are event-driven automation that provide automated guardrails, transforming 'dumb' agents into productive builders without making them actually smarter",
+      "Planning upfront (even 100k tokens) saves more than endless agentic loops fixing compile issues - scaffolding investment pays dividends",
+      "Agents are specialized instances supported by scaffolding, not independent entities - they need context, tools, orchestration, and hooks to be effective",
+      "Different hook implementations (Cursor vs Factory Droid) reflect different philosophies: simplicity vs granular control"
+    ],
+    "mainThemes": [
+      "Infrastructure over Intelligence",
+      "Automated Validation Through Hooks",
+      "Strategic Planning vs Reactive Debugging",
+      "Layered Scaffolding Architecture",
+      "Practical Implementation Patterns"
+    ],
+    "uniqueAngles": [
+      "Using construction scaffolding metaphor to explain AI infrastructure to mixed audience",
+      "Hooks as the 'gateway drug' to scaffolding thinking - concrete starting point that demonstrates ROI quickly",
+      "Token economics perspective: 100k tokens in planning vs endless debugging loops",
+      "The 'dumb model' paradox: models appear dumb due to missing infrastructure, not lack of capability"
+    ],
+    "storyPotential": "Strong narrative arc from problem (babysitting agents) to solution (hooks/scaffolding) to strategic framework (PAI principles), grounded in real developer experience (Ray's Rust/TypeScript sync issue)"
+  },
+  "detailedFindings": {
+    "background": "Developers waste significant time manually verifying AI agent outputs - running linters, checking types, fixing compilation errors. This creates the impression that AI agents are 'dumb' when in reality they lack proper infrastructure support. The Model Context Protocol and agentic coding movement have made AI assistants more capable, but without scaffolding, they remain unproductive.",
+    "currentState": "Two thought leaders are converging on the same insight from different angles: Daniel Miessler from strategic PAI architecture, Ray Fernando from practical hooks implementation. Both conclude that infrastructure (scaffolding) is the force multiplier that makes agents productive, not waiting for smarter models.",
+    "trends": [
+      {
+        "name": "Infrastructure-First AI Development",
+        "description": "Shift from waiting for better models to building better systems around existing models. Focus on scaffolding: context management, tools, orchestration, and automated validation.",
+        "impact": "High",
+        "timeline": "Current",
+        "examples": [
+          "Daniel Miessler's Personal AI Infrastructure (PAI) with 15 principles",
+          "Ray Fernando's hooks implementation for Rust/TypeScript sync",
+          "Cursor and Factory Droid hook systems for agent workflows"
+        ]
+      },
+      {
+        "name": "Event-Driven Agent Guardrails",
+        "description": "Hooks that run at specific lifecycle events (session start, file edit, agent stop) provide automated validation without developer intervention. Agents self-correct by receiving immediate feedback.",
+        "impact": "High",
+        "timeline": "Current",
+        "examples": [
+          "Cursor afterEdit hooks for linting and type generation",
+          "Factory Droid session_start hooks for binding freshness",
+          "Cargo check validation on agent stop"
+        ]
+      },
+      {
+        "name": "Planning Over Agentic Loops",
+        "description": "Strategic approach where upfront planning (100k tokens) is cheaper than endless debugging loops. Scaffolding is set up once, benefits compound forever.",
+        "impact": "Medium",
+        "timeline": "Emerging",
+        "examples": [
+          "Ray's emphasis on planning before execution",
+          "Token economics: prevention vs cure",
+          "Infrastructure investment mindset"
+        ]
+      },
+      {
+        "name": "Tool Philosophy Differentiation",
+        "description": "Different hook implementations reflect different design philosophies. Cursor prioritizes simplicity, Factory Droid prioritizes granular control. Both valid for different use cases.",
+        "impact": "Medium",
+        "timeline": "Current",
+        "examples": [
+          "Cursor: .cursor/hooks.json, simple file-based triggers",
+          "Factory Droid: Tool-specific targeting, session lifecycle events, interactive /hooks command"
+        ]
+      }
+    ],
+    "challenges": [
+      {
+        "challenge": "The Babysitting Problem - developers spending time manually verifying agent outputs",
+        "impact": "Reduced productivity, token waste on debugging loops, developer frustration",
+        "potentialSolutions": [
+          "Implement hooks for automated linting and type checking",
+          "Set up validation at lifecycle events (afterEdit, onStop)",
+          "Invest in upfront scaffolding planning"
+        ]
+      },
+      {
+        "challenge": "Backend-Frontend Sync Issues - agent writes backend code, immediately tries frontend, creates type mismatches",
+        "impact": "Ray's specific example: Rust backend changes → TypeScript frontend out of sync",
+        "potentialSolutions": [
+          "afterEdit hooks that regenerate TypeScript types from Rust definitions",
+          "session_start hooks that ensure bindings are current before agent writes code",
+          "Automatic type generation on every backend file change"
+        ]
+      },
+      {
+        "challenge": "Hook Performance Overhead - every file edit triggers validation, could slow agent workflows",
+        "impact": "User experience degradation if too many hooks or complex validation",
+        "potentialSolutions": [
+          "Use selective hooks (only for specific file types or paths)",
+          "Keep validation fast and focused (lint only changed files)",
+          "Balance thoroughness with speed"
+        ]
+      }
+    ],
+    "opportunities": [
+      {
+        "opportunity": "Democratize Scaffolding Knowledge - most developers don't know hooks exist or how to use them",
+        "potential": "Help developers move from 'vibe coding' to 'shipping code' by teaching scaffolding patterns",
+        "requirements": [
+          "Accessible explanation of scaffolding concept (construction metaphor)",
+          "Concrete starting point (one hook for linting)",
+          "ROI demonstration (token savings, time saved)"
+        ]
+      },
+      {
+        "opportunity": "Map Hooks to PAI Principles - show how practical implementation (hooks) exemplifies strategic framework (15 principles)",
+        "potential": "Bridge tactical and strategic perspectives, serve both beginners and experts",
+        "requirements": [
+          "Clear articulation of PAI principles (Foundational Algorithm, Determinism, UNIX Philosophy, Context Management)",
+          "Specific examples of how hooks implement each principle",
+          "Table or visual showing principle-to-implementation mapping"
+        ]
+      },
+      {
+        "opportunity": "Tool Comparison as Decision Framework - help readers choose between Cursor and Factory Droid",
+        "potential": "Provide actionable guidance based on use case, not just feature list",
+        "requirements": [
+          "Feature comparison table",
+          "Philosophy explanation (simplicity vs control)",
+          "When to use which tool"
+        ]
+      }
+    ]
+  },
+  "sources": [
+    {
+      "id": "source-001",
+      "title": "Personal AI Infrastructure Blog Post",
+      "url": "https://danielmiessler.com/blog/personal-ai-infrastructure",
+      "type": "article",
+      "credibility": "High",
+      "inlineCitable": true,
+      "citableFor": ["quotes", "claims", "methodology"],
+      "keyPoints": [
+        "Scaffolding > Model thesis",
+        "15 principles of PAI (Foundational Algorithm, Determinism, UNIX Philosophy, Context Management, etc.)",
+        "Agents as specialized instances supported by scaffolding",
+        "Context Routing, Hooks, Skills for personalization",
+        "Examples: Kai CLI, Blogging workflow, Security validation"
+      ],
+      "dateAccessed": "2026-01-02"
+    },
+    {
+      "id": "source-002",
+      "title": "Your AI Agent Isn't Dumb. It Needs Guardrails. - Ray Fernando YouTube Video",
+      "url": "https://www.youtube.com/watch/FdF787XcNo8",
+      "type": "article",
+      "credibility": "High",
+      "inlineCitable": true,
+      "citableFor": ["quotes", "methodology", "statistics"],
+      "keyPoints": [
+        "Babysitting problem: manually running linters, type checks, rebuilds",
+        "Hooks run automatically when files change",
+        "Rust backend → TypeScript type generation via hooks",
+        "Cursor vs Factory Droid comparison",
+        "Planning (100k tokens) saves debugging loops",
+        "Quote: 'The agent isn't smarter - we're just giving it better guardrails'",
+        "Quote: 'Scaffolding that lets you ship and not just vibe code'"
+      ],
+      "dateAccessed": "2026-01-02"
+    }
+  ],
+  "citableFacts": [
+    {
+      "id": "fact-001",
+      "claim": "A well-designed system with an unsophisticated model will outperform a smart model in a poorly-designed system",
+      "sourceIds": ["source-001"],
+      "suggestedCitation": "[Daniel Miessler's PAI Blog](https://danielmiessler.com/blog/personal-ai-infrastructure)",
+      "importance": "high",
+      "suggestedSection": "introduction",
+      "citationType": "claim"
+    },
+    {
+      "id": "fact-002",
+      "claim": "Every time my AI agent wrote code, I was spending time manually verifying everything by running linters by hand, checking the types, and rebuilding the code",
+      "sourceIds": ["source-002"],
+      "suggestedCitation": "[Ray Fernando](https://www.youtube.com/watch/FdF787XcNo8)",
+      "importance": "high",
+      "suggestedSection": "main",
+      "citationType": "quote"
+    },
+    {
+      "id": "fact-003",
+      "claim": "I was spending a lot of time just basically babysitting my AI instead of building on things",
+      "sourceIds": ["source-002"],
+      "suggestedCitation": "[Ray Fernando](https://www.youtube.com/watch/FdF787XcNo8)",
+      "importance": "high",
+      "suggestedSection": "main",
+      "citationType": "quote"
+    },
+    {
+      "id": "fact-004",
+      "claim": "Agents are specialized instances supported by scaffolding, not independent entities",
+      "sourceIds": ["source-001"],
+      "suggestedCitation": "[Daniel Miessler's PAI Blog](https://danielmiessler.com/blog/personal-ai-infrastructure)",
+      "importance": "medium",
+      "suggestedSection": "main",
+      "citationType": "claim"
+    },
+    {
+      "id": "fact-005",
+      "claim": "The agent will actually feel much smarter because it's fixing its own mistakes along the way",
+      "sourceIds": ["source-002"],
+      "suggestedCitation": "[Ray Fernando](https://www.youtube.com/watch/FdF787XcNo8)",
+      "importance": "high",
+      "suggestedSection": "main",
+      "citationType": "quote"
+    },
+    {
+      "id": "fact-006",
+      "claim": "The agent actually isn't smarter as a result of this. We're just giving it better guardrails",
+      "sourceIds": ["source-002"],
+      "suggestedCitation": "[Ray Fernando](https://www.youtube.com/watch/FdF787XcNo8)",
+      "importance": "high",
+      "suggestedSection": "main",
+      "citationType": "quote"
+    },
+    {
+      "id": "fact-007",
+      "claim": "I may spend 100,000 tokens in planning, but you see how much it saves us. I'm setting up the scaffolding, the tooling. I don't have to go in an agentic loop to fix a lot of compile issues because that's already being done in a hooks call",
+      "sourceIds": ["source-002"],
+      "suggestedCitation": "[Ray Fernando](https://www.youtube.com/watch/FdF787XcNo8)",
+      "importance": "medium",
+      "suggestedSection": "main",
+      "citationType": "quote"
+    },
+    {
+      "id": "fact-008",
+      "claim": "This is the scaffolding that lets you ship and not just vibe code",
+      "sourceIds": ["source-002"],
+      "suggestedCitation": "[Ray Fernando](https://www.youtube.com/watch/FdF787XcNo8)",
+      "importance": "high",
+      "suggestedSection": "conclusion",
+      "citationType": "quote"
+    },
+    {
+      "id": "fact-009",
+      "claim": "Whenever the agent runs and starts a session, it basically tries to make sure that the bindings are set before it even starts to write the code. So it doesn't make any assumptions about the code it writes",
+      "sourceIds": ["source-002"],
+      "suggestedCitation": "[Ray Fernando](https://www.youtube.com/watch/FdF787XcNo8)",
+      "importance": "medium",
+      "suggestedSection": "main",
+      "citationType": "methodology"
+    },
+    {
+      "id": "fact-010",
+      "claim": "15 principles of PAI including Foundational Algorithm, Determinism, UNIX Philosophy, and Context Management",
+      "sourceIds": ["source-001"],
+      "suggestedCitation": "[Daniel Miessler's PAI Blog](https://danielmiessler.com/blog/personal-ai-infrastructure)",
+      "importance": "medium",
+      "suggestedSection": "main",
+      "citationType": "claim"
+    }
+  ],
+  "contentRecommendations": {
+    "proposedAngles": [
+      "Lead with 'Scaffolding > Model' thesis - infrastructure beats intelligence",
+      "Use hooks as the concrete, actionable example of scaffolding in practice",
+      "Start with scaffolding metaphor (construction) to make accessible to beginners",
+      "Map Ray's practical implementation back to Daniel's strategic PAI principles",
+      "Position as thought leadership with practical takeaways, not tutorial"
+    ],
+    "targetAudience": "Mixed audience - developers new to agentic coding who need foundational concepts, AND experienced AI coders who want strategic insights on infrastructure investment",
+    "uniqueValueProposition": "First blog post to connect Daniel Miessler's strategic PAI framework with Ray Fernando's practical hooks implementation, showing how tactical tools (hooks) exemplify strategic principles (scaffolding > model)",
+    "suggestedStructure": [
+      "Introduction: Scaffolding metaphor + problem statement (babysitting agents)",
+      "Section 1: The 'Dumb Model' Paradox - why infrastructure matters more than intelligence",
+      "Section 2: Hooks as Guardrails - concrete implementation with Cursor vs Factory Droid",
+      "Section 3: PAI Principles Applied - mapping hooks to broader scaffolding architecture",
+      "Conclusion: Strategic takeaways + actionable first steps (audit workflows, start with one hook)"
+    ],
+    "keyMessages": [
+      "Infrastructure (scaffolding) matters more than raw model intelligence",
+      "Hooks exemplify scaffolding - event-driven automation provides guardrails without manual intervention",
+      "Planning upfront saves debugging time and tokens - scaffolding investment pays dividends",
+      "Layered architecture: context → tools → orchestration → hooks, each builds on previous",
+      "Different tools reflect different philosophies: Cursor (simplicity) vs Factory Droid (control)"
+    ]
+  },
+  "researchDepth": "comprehensive",
+  "totalSources": 2,
+  "gapsIdentified": [
+    "Limited quantitative data on token savings from hooks (Ray mentions 100k tokens planning but not precise before/after metrics)",
+    "No specific examples of hook configuration code (intentionally keeping conceptual per user request)",
+    "Factory Droid documentation not directly accessed (relying on Ray's description)"
+  ]
+}
